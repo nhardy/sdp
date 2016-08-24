@@ -3,12 +3,21 @@
   "$_black": "#000000",
 
   "$_closeWhite": "#eeeeee",
-  "$_charcoal": "#333333",
-  "$_tardisBlue": "#003a69",
-  "$_badassGreen": "#bada55",
+  "$_dark": "#252b2b",
+  "$_lightishBlue": "#0099cc",
+  "$_lighterBlue": "#00aadd",
+  "$_hoverBlue": "#009ed2",
+  "$_darkishBlue": "#00749b",
+  "$_reddish": "#dc001a",
+  "$_dullGray": "#a6a6a6",
 
+  "$pageBackgroundColor": "$_lightishBlue",
   "$backgroundColor": "$_closeWhite",
-  "$textColor": "$_charcoal",
-  "$themeColor": "$_tardisBlue",
-  "$highlightColor": "$_badassGreen"
+  "$textColor": "$_dark",
+  "$themeColor": "$_lightishBlue",
+  "$linkColor": "$_lighterBlue",
+  "$linkHoverColor": "$_hoverBlue",
+  "$highlightColor": "$_darkishBlue",
+  "$helpsColor": "$_reddish",
+  "$detailColor": "$_dullGray"
 }

@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Helmet from 'react-helmet';
 
+import faviconIco from 'app/assets/images/favicon_secondary.ico';
+
 
 const Html = ({ assets, component, store }) => {
   const content = component ? ReactDOMServer.renderToString(component) : '';
@@ -16,6 +18,7 @@ const Html = ({ assets, component, store }) => {
         {head.title.toComponent()}
         {head.meta.toComponent()}
         {head.link.toComponent()}
+        <link rel="shortcut icon" href={faviconIco} type="image/vnd.microsoft.icon" />
         {__DEVELOPMENT__ ? <script src="/webpack-dev-server.js"></script> : null}
         {head.script.toComponent()}
         {assets.bundle.css && assets.bundle.css.map((path, index) => (

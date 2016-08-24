@@ -135,9 +135,10 @@ export default function webpackFactory({ production = false, client = false }) {
                 presets: [
                   // UglifyJS cannot currently work with the level of ES6 webpack2 can
                   production ? ['es2015', { modules: false }] : 'modern/webpack2',
+                  !production && 'modern/safari9',
                   'stage-0',
                   'react',
-                ],
+                ].filter(identity),
                 plugins: [
                   [
                     'transform-async-to-module-method',
@@ -165,12 +166,16 @@ export default function webpackFactory({ production = false, client = false }) {
           loader: cssLoader({ production, client }),
         },
         {
-          test: /\.(?:jpe?g|png|svg|woff2?|eot|ttf)(?:\?.*$|$)/,
+          test: /\.(?:jpe?g|png|svg|woff2?|eot|ttf|ico)(?:\?.*$|$)/,
           loader: 'url',
           query: {
             limit: 5120,
             name: '[name]-[hash:6].[ext]',
           },
+        },
+        {
+          test: /favicon\.ico$/,
+          loader: 'binary',
         },
       ],
     },

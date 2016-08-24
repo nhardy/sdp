@@ -8,8 +8,27 @@ import FontAwesome from 'app/components/FontAwesome';
 
 import Nav from './Nav';
 import styles from './styles.styl';
+import utsLogo from 'app/assets/images/uts.png';
 
 
+const utsNav = [
+  {
+    description: 'Future Students',
+    href: 'https://www.uts.edu.au/future-students',
+  },
+  {
+    description: 'Current Students',
+    href: 'https://www.uts.edu.au/current-students',
+  },
+  {
+    description: 'Research and Teaching',
+    href: 'https://www.uts.edu.au/research-and-teaching',
+  },
+  {
+    description: 'Partners and Community',
+    href: 'https://www.uts.edu.au/partners-and-community',
+  },
+];
 const dismissEvents = ['click', 'touchstart'];
 
 export default class SiteHeader extends Component {
@@ -37,15 +56,27 @@ export default class SiteHeader extends Component {
     return (
       <header className={styles.root}>
         <div className={styles.column}>
-          <span className={styles.header}>Nathan Hardy</span>
-          <span className={styles.tagline}>Developer</span>
+          <nav className={styles.top}>
+            <div className={styles.logoWrapper}>
+              <a href="https://www.uts.edu.au/" target="_blank">
+                <img className={styles.logo} src={utsLogo} alt="UTS" />
+              </a>
+            </div>
+            {utsNav.map(({ description, href }) => (
+              <a key={description} className={styles.topNavItem} href={href} target="_blank">
+                <span className={styles.topNavText}>{description}</span>
+              </a>
+            ))}
+          </nav>
         </div>
         <Sticky className={styles.sticky} stickyClassName={styles.isSticky}>
           <div className={cx(styles.column, styles.navBar)}>
             <label htmlFor="sidebarToggle" className={styles.hamburger} ref="label">
               <FontAwesome className="fa-bars" />
             </label>
-            <Link to="/" className={styles.siteName}>nhardy.id.au</Link>
+            <span className={styles.siteName}>
+              <Link to="/">UTS: <span className={styles.helps}>HELPS</span> <span className={styles.bookingSystem}>Booking System</span></Link>
+            </span>
             <Nav className={styles.nav} />
           </div>
         </Sticky>

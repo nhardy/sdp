@@ -13,7 +13,7 @@ const SiteHeaderNav = ({ className, items, mode = 'horizontal' }, { location }) 
       <ul className={styles.list}>
         {items.map((item) => (
           <li key={item.to} className={cx(styles.item, { [styles.active]: item.to.startsWith(location.pathname) })}>
-            <Link {...item} />
+            <Link className={styles.link} {...item} />
           </li>
         ))}
       </ul>
@@ -32,7 +32,11 @@ SiteHeaderNav.contextTypes = {
 };
 
 SiteHeaderNav.defaultProps = {
-  items: [{ to: '/projects', children: 'Projects' }, { to: '/cv', children: 'Curriculum Vitæ' }],
+  items: [
+    { to: 'http://www.ssu.uts.edu.au/helps/about.html', target: '_blank', children: 'HELPS HQ' },
+    { to: 'https://servicedesk.uts.edu.au/CAisd/pdmweb.exe', target: '_blank', children: 'IT Service Desk' },
+    { to: '/faq', children: 'FAQ' },
+  ],
 };
 
 export default SiteHeaderNav;

@@ -1,12 +1,67 @@
 @import '~app/assets/stylus'
 
 
+$logoHeight = 50px
+
 .root
-  background: $backgroundColor
-  border-bottom 4px solid $themeColor
+  background: $themeColor
+  border-bottom 4px solid $highlightColor
 
 .column
   composes: column from 'app/assets/stylus/common.styl'
+
+.top
+  display: flex
+  flex-direction: row
+  margin: 8px 0
+
+  +from($med)
+    margin: 12px 0
+
+  +from($lge)
+    margin: 16px 0
+
+.logoWrapper
+  flex-grow: 1
+
+.logo
+  height: $logoHeight
+
+.topNavItem
+  align-self: center
+  text-transform: uppercase
+  text-decoration: none
+  color: $backgroundColor
+  font-weight: bold
+
+  // width: 136px
+  // padding: 0 8px
+  display: none
+
+  +from($med)
+    display: table
+    width: 136px
+    padding: 0 12px
+
+  +from($lge)
+    width: 144px
+    padding: 0 16px
+
+  height: ($logoHeight - 8px)
+  border: 1px solid transparent
+  margin-left: -1px
+  border-left: 1px solid $linkColor
+
+  transition: height 250ms ease-in-out, border 250ms ease-in-out, background 250ms ease-in-out
+
+  &:hover
+    background: $linkHoverColor
+    height: $logoHeight
+    border: 1px solid $linkColor
+
+.topNavText
+  display: table-cell
+  vertical-align: middle
 
 .navBar
   display: flex
@@ -23,12 +78,13 @@
 
 .aside
   position: fixed
+  z-index: $zIndexSidebar
   top: 0
   left: 0
   width: 250px
   height: 100%
   padding: 8px
-  background: $themeColor
+  background: $textColor
   color: $backgroundColor
   display: flex
   flex-direction: column
@@ -36,6 +92,7 @@
   transition: transform 250ms ease-in-out
 
 .close
+  cursor: pointer
   display: block
   text-align: right
 
@@ -46,7 +103,9 @@
   transform: translateX(-100%)
 
 .hamburger
+  cursor: pointer
   margin-right: var(--gutter)
+  z-index: $zIndexHamburger
 
 +from($med)
   .aside
@@ -58,22 +117,35 @@
   display: block
 
 .sticky
-  background: rbga($backgroundColor, 0.85)
-  color: $textColor
-  transition: background 250ms ease-in-out, color 250ms ease-in-out
+  background: $highlightColor
+  color: $backgroundColor
+  transition: background 250ms ease-in-out
 
 .isSticky
-  background: rgba($themeColor, 0.85)
-  color: $backgroundColor
+  background: rgba($highlightColor, 0.95)
 
 .siteName
   & .isSticky
     color: $backgroundColor
 
-  display: inline-block
+  display: block
   font-size: 28px
+  font-weight: 600
 
   +upTo($med)
     position: absolute
-    left: 50%
-    transform: translateX(-50%)
+    width: 100%
+    text-align: center
+
+  a
+    text-decoration: none
+
+.helps
+  color: $helpsColor
+
+.bookingSystem
+  color: $detailColor
+  font-weight: 500
+
+  +upTo($sml)
+    display: none
