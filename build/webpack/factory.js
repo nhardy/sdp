@@ -90,6 +90,7 @@ export default function webpackFactory({ production = false, client = false }) {
         'babel-polyfill',
         path.resolve(__dirname, '..', '..', 'src', 'client', 'index.js'),
       ].filter(identity),
+      sso: path.resolve(__dirname, '..', '..', 'src', 'app', 'lib', 'sso.js'),
     } : {
       server: [
         'babel-polyfill',
@@ -176,6 +177,10 @@ export default function webpackFactory({ production = false, client = false }) {
         {
           test: /favicon\.ico$/,
           loader: 'binary',
+        },
+        {
+          test: /\.html$/,
+          loader: 'raw',
         },
       ],
     },

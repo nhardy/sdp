@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>UTS: HELPS Booking System</title>
+<script type="text/javascript" src="<%= script %>"></script>
+<script type="text/javascript">
+/* eslint-disable */
+
+var sso = new SSO({
+  client: '<%= client %>',
+});
+
+sso.callback(function (err, params) {
+  // TODO: Something on error
+  if (err) return;
+  window.location.replace(window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port: '') + (params.redirect || '/'));
+});
+</script>
+</head>
+<body>
+<p>Logging you in</p>
+</body>
+</html>

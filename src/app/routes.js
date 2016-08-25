@@ -10,6 +10,7 @@ export default function getRoutes(store) { // eslint-disable-line no-unused-vars
   return (
     <Route path="/" component={App}>
       <Route path="/__404" component={ErrorView} status={404} />
+      <Route path="/__500" component={ErrorView} status={500} />
       <IndexRoute component={HomeView} />
       <Route path="*" component={ErrorView} status={404} />
     </Route>

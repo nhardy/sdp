@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 
+import config from 'app/config';
 import DefaultLayout from 'app/layouts/Default';
 
 import styles from './styles.styl';
@@ -11,7 +12,8 @@ export default class ErrorView extends Component { // eslint-disable-line react/
     return (
       <DefaultLayout className={styles.root}>
         <Helmet title="Login | UTS: HELPS Booking System" />
-        <form method="POST" action="/login">
+        <form method="POST" action="/api/sso/login">
+          <input type="hidden" name="client" value={config.sso.client} />
           <h1>Login</h1>
           <label htmlFor="username">Staff or student number</label>
           <input type="text" id="username" name="username" autoFocus />
