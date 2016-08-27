@@ -45,9 +45,12 @@ export default class SiteHeader extends Component {
             <label htmlFor="sidebarToggle" className={styles.hamburger} ref="label">
               <FontAwesome className="fa-bars" />
             </label>
-            <span className={styles.siteName}>
-              <Link to="/">UTS: <span className={styles.helps}>HELPS</span> <span className={styles.bookingSystem}>Booking System</span></Link>
-            </span>
+            <div className={styles.siteName}>
+              <Link className={styles.siteLink} to="/">
+                <span>UTS: </span><span className={styles.helps}>HELPS</span>
+                <span className={styles.bookingSystem}> Booking System</span>
+              </Link>
+            </div>
             <Nav className={styles.nav} />
           </div>
         </Sticky>
