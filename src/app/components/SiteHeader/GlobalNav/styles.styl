@@ -1,0 +1,57 @@
+@import '~app/assets/stylus'
+
+
+$logoHeight = 50px
+
+.root
+  display: flex
+  flex-direction: row
+  margin: 8px 0
+
+  +from($med)
+    margin: 12px 0
+
+  +from($lge)
+    margin: 16px 0
+
+.wrapper
+  flex-grow: 1
+
+.logo
+  height: $logoHeight
+
+.item
+  align-self: center
+  text-transform: uppercase
+  text-decoration: none
+  color: $backgroundColor
+  font-weight: bold
+
+  // width: 136px
+  // padding: 0 8px
+  display: none
+
+  +from($med)
+    display: table
+    width: 136px
+    padding: 0 12px
+
+  +from($lge)
+    width: 144px
+    padding: 0 16px
+
+  height: ($logoHeight - 8px)
+  border: 1px solid transparent
+  margin-left: -1px
+  border-left: 1px solid $linkColor
+
+  transition: height 250ms ease-in-out, border 250ms ease-in-out, background 250ms ease-in-out
+
+  &:hover
+    background: $linkHoverColor
+    height: $logoHeight
+    border: 1px solid $linkColor
+
+.text
+  display: table-cell
+  vertical-align: middle

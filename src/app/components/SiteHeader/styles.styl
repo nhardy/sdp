@@ -1,73 +1,18 @@
 @import '~app/assets/stylus'
 
 
-$logoHeight = 50px
-
 .root
   background: $themeColor
-  border-bottom 4px solid $highlightColor
 
 .column
   composes: column from 'app/assets/stylus/common.styl'
 
-.top
-  display: flex
-  flex-direction: row
-  margin: 8px 0
-
-  +from($med)
-    margin: 12px 0
-
-  +from($lge)
-    margin: 16px 0
-
-.logoWrapper
-  flex-grow: 1
-
-.logo
-  height: $logoHeight
-
-.topNavItem
-  align-self: center
-  text-transform: uppercase
-  text-decoration: none
-  color: $backgroundColor
-  font-weight: bold
-
-  // width: 136px
-  // padding: 0 8px
-  display: none
-
-  +from($med)
-    display: table
-    width: 136px
-    padding: 0 12px
-
-  +from($lge)
-    width: 144px
-    padding: 0 16px
-
-  height: ($logoHeight - 8px)
-  border: 1px solid transparent
-  margin-left: -1px
-  border-left: 1px solid $linkColor
-
-  transition: height 250ms ease-in-out, border 250ms ease-in-out, background 250ms ease-in-out
-
-  &:hover
-    background: $linkHoverColor
-    height: $logoHeight
-    border: 1px solid $linkColor
-
-.topNavText
-  display: table-cell
-  vertical-align: middle
-
 .navBar
   display: flex
   flex-direction: row
-  padding-top: var(--padding)
-  padding-bottom: var(--padding)
+  // padding-top: var(--padding)
+  // padding-bottom: var(--padding)
+  height: 60px
   font-size: 20px
 
 .nav
@@ -104,7 +49,7 @@ $logoHeight = 50px
 
 .hamburger
   cursor: pointer
-  margin-right: var(--gutter)
+  margin: auto var(--gutter) auto 0
   z-index: $zIndexHamburger
 
 +from($med)
@@ -128,9 +73,9 @@ $logoHeight = 50px
   & .isSticky
     color: $backgroundColor
 
-  display: block
   font-size: 28px
   font-weight: 600
+  align-self: center
 
   +upTo($med)
     position: absolute
