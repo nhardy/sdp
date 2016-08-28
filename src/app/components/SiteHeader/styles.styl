@@ -78,13 +78,15 @@
   color: $backgroundColor
   transition: background 250ms ease-in-out
 
+  // Fix sticky header disappearing on mobile devices when scrolling
+  // @see https://github.com/captivationsoftware/react-sticky/issues/92
+  // @see https://github.com/captivationsoftware/react-sticky/pull/115
+  transform: translateZ(0)
+
 .isSticky
   background: rgba($highlightColor, 0.95)
 
 .siteName
-  & .isSticky
-    color: $backgroundColor
-
   font-size: 28px
   font-weight: 600
   display: flex
