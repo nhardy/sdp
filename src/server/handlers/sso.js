@@ -35,7 +35,7 @@ export function loginHandler(req, res) {
   const { callback } = ssoClient;
 
   if (user) {
-    res.cookie('SSO_user', username, { signed: true });
+    res.cookie('SSO_user', username, { signed: true, httpOnly: true });
   } else {
     const error = new Error('Login failed');
     error.status = 500;
