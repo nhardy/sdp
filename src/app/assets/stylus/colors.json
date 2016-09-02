@@ -10,6 +10,7 @@
   "$_darkishBlue": "#00749b",
   "$_reddish": "#dc001a",
   "$_dullGray": "#a6a6a6",
+  "$_brightBlue": "#55ddff",
 
   "$pageBackgroundColor": "$_lightishBlue",
   "$backgroundColor": "$_closeWhite",
@@ -19,5 +20,6 @@
   "$linkHoverColor": "$_hoverBlue",
   "$highlightColor": "$_darkishBlue",
   "$helpsColor": "$_reddish",
-  "$detailColor": "$_dullGray"
+  "$detailColor": "$_dullGray",
+  "$brightLinkColor": "$_brightBlue"
 }
