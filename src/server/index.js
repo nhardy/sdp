@@ -1,9 +1,7 @@
 import Express from 'express';
-import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
 
 import config from 'app/config';
-import { loginHandler } from 'server/handlers/sso';
+import ssoService from 'server/api/sso';
 import callbackHandler from 'server/handlers/callback';
 import mainMiddleware from 'server/middleware/main';
 import errorMiddleware from 'server/middleware/error';
@@ -21,8 +19,7 @@ app.get('/favicon.ico', (req, res) => {
 // Serve static files
 app.use('/dist', Express.static('dist'));
 
-app.use('/api/sso', cookieParser('SUPER_SECRET_THING_DO_NOT_DO_THIS_IN_PRODUCTION'));
-app.post('/api/sso/login', bodyParser.urlencoded({ extended: false }), loginHandler);
+app.use('/api/sso', ssoService);
 
 app.get('/callback', callbackHandler);
 

@@ -1,5 +1,5 @@
 export default {
-  port: 8080,
+  port: 8000,
   sso: {
     client: 'uts-helps-booking',
   },
