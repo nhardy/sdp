@@ -1,23 +1,13 @@
 @import '~app/assets/stylus'
 
 
+$infoWidth = 140px
+$padding = 24px
+
 .root
   background: $textColor
-  color: $backgroundColor
-
-  padding: $minPadding 0
-
-  +from($sml)
-    padding: $smlPadding 0
-
-  +from($med)
-    padding: $medPadding 0
-
-  +from($lge)
-    padding: $lgePadding 0
-
-  +from($xlg)
-    padding: $xlgPadding 0
+  color: $footnoteColor
+  line-height: 1.15
 
 .column
   composes: column from 'app/assets/stylus/common.styl'
@@ -26,46 +16,88 @@
   display: flex
   flex-direction: row
   flex-wrap: wrap
+  border-top: 1px solid $borderColor
+  border-left: 1px solid $borderColor
+  margin-right: -1px
 
 .info
-  flex: 0 0 100%
+  flex: 1 0 auto
+  width: $infoWidth
+  padding: $padding
+  border-bottom: 1px solid $borderColor
+  border-right: 1px solid $borderColor
 
-  +from($med)
-    flex-basis: "calc((100% - %s) / 3)" % (2 * $medGutter)
-    margin-right: $medGutter
+  li
+    &:not(:last-child)
+      margin-bottom: .25em
 
-    &:nth-child(3n)
-      margin-right: 0
+    & > a
+      text-decoration: none
+      font-weight: 600
+      color: $brightLinkColor
 
-  +from($lge)
-    flex-basis: "calc((100% - %s) / 4)" % (3 * $lgeGutter)
-    margin-right: $lgeGutter
+      &:hover
+        color: $brightLinkHoverColor
 
-    &:nth-child(n)
-      margin-right: $lgeGutter
+.double
+  flex: 2 0 auto
+  width: (2 * $infoWidth)
 
-    &:nth-child(4n)
-      margin-right: 0
+.full
+  flex-basis: 100%
 
-  +from($xlg)
-    flex-basis: "calc((100% - %s) / 4)" % (3 * $xlgGutter)
-    margin-right: $xlgGutter
+.secondaryInfo
+  display: flex
+  justify-content: space-between
 
-    &:nth-child(n)
-      margin-right: $xlgGutter
+  div
+    &:not(:last-child)
+      margin-right: $padding
 
-  li > a
-    text-decoration: none
-    color: $brightLinkColor
-
-    &:hover
-      color: $backgroundColor
-
+    &:not(.social)
+      +upTo($med)
+        display: none
 
 .heading
   text-transform: uppercase
   font-weight: 600
   font-size: 20px
+  color: $backgroundColor
+  margin-bottom: 16px
+
+.lesserHeading
+  font-weight: 600
+  font-size: 16px
+  color: $backgroundColor
+  margin-bottom: 8px
+
+.headingLink
+  text-decoration: none
+
+.social
+  flex: 2 0 auto
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+.socialLink
+  color: $backgroundColor
+
+  &:hover
+    color: $brightLinkColor
 
 .link
   text-decoration: none
+  font-weight: 600
+  color: $brightLinkColor
+
+  &:hover
+    color: $brightLinkHoverColor
+
+.github
+  composes: socialLink
+  margin-left: $padding
+
+.footnote
+  display: flex
+  justify-content: space-between
