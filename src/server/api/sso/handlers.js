@@ -1,55 +1,72 @@
-// Please NOTE that this is a stubbed implementation of a Single Sign On Solution
-// DO NOT use in a production system
-// If you do use anything like this in production, please resign immediately from your position
+// Please note that this is a stubbed implementation of a Single Sign On Solution
+// DO NOT use in a production system!
+//
+// If you do use anything like this in production, please resign immediately from your position.
+// You do not belong in the Information Technology Industry.
+import { pick } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import config from 'app/config';
+import { COOKIE_KEY } from 'server/api/sso/constants';
+import { users, clients, sessions } from 'server/api/sso/db';
 
-const users = {
-  1234567: {
-    firstName: 'Nathan',
-    lastName: 'Hardy',
-    email: 'example@student.uts.edu.au',
-  },
-};
 
-const clients = {
-  [config.sso.client]: {
-    // In production, this would include domain/port
-    callback: '/callback',
-  },
-};
-
-const sessions = {};
+function newSession(client, username) {
+  const token = uuid();
+  sessions[`${client}:${token}`] = username;
+  return { token, ttl: 36000 };
+}
 
 export function loginHandler(req, res) {
-  const { username, client } = req.body;
+  const { username, password } = req.body;
 
   const user = users[username];
-  const ssoClient = clients[client];
-  if (!ssoClient) {
-    const error = new Error('Invalid client');
-    error.status = 400;
-    throw error;
-  }
-  const { callback } = ssoClient;
 
-  if (user) {
-    res.cookie('SSO_user', username, { signed: true, httpOnly: true });
-  } else {
+  const { callback } = clients[res.locals.client];
+
+  // Extremely unsecure. NEVER do this in production.
+  // @see https://youtu.be/8ZtInClXe1Q
+  if (!user || password !== user.password) {
     const error = new Error('Login failed');
-    error.status = 500;
+    error.status = 403;
+
+    // Rather than producing a JSON response, we would display a login page from the login service
+    // Just throwing the error here, because it isn't important for this assignment
     throw error;
   }
 
-  if (callback) {
-    const token = uuid();
-    sessions[`${client}:${token}`] = username;
-    res.redirect(302, `${callback}?token=${token}&ttl=36000`);
+  // The User has authenticated with the SSO service, set a cookie on the login service
+  res.cookie(COOKIE_KEY, username, { signed: true, httpOnly: true });
+
+  const { token, ttl } = newSession(res.locals.client, username);
+  res.redirect(302, `${callback}?token=${token}&ttl=${ttl}`);
+}
+
+export function tokenHandler(req, res) {
+  const { username } = res.locals;
+
+  if (!username) {
+    const error = Error('Unauthenticated');
+    error.status = 401;
+
+    throw error;
   }
+
+  const { token, ttl } = newSession(res.locals.client, username);
+
+  res.send({ token, ttl });
 }
 
 export function retrieveHandler(req, res) {
-  const { client, token } = req.query;
-  res.send(users[sessions[`${client}${token}`]]);
+  const { token } = req.query;
+
+  const user = users[sessions[`${res.locals.client}:${token}`]];
+  if (!user) {
+    const error = Error('Invalid token');
+    error.status = 401;
+
+    // There was no matching session for the `client`/`token` combination
+    throw error;
+  }
+
+  res.send(pick(user, clients[res.locals.client].scope));
 }

@@ -1,0 +1,3 @@
+export const COOKIE_SECRET = 'SUPER_SECRET_THING_DO_NOT_DO_THIS_IN_PRODUCTION';
+
+export const COOKIE_KEY = 'SSO_user';

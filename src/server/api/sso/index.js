@@ -2,13 +2,41 @@ import Express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
-import { loginHandler } from 'server/api/sso/handlers';
+import { COOKIE_SECRET, COOKIE_KEY } from 'server/api/sso/constants';
+import { clients } from 'server/api/sso/db';
+import { loginHandler, tokenHandler, retrieveHandler } from 'server/api/sso/handlers';
 
 
 const ssoService = new Express();
 
-ssoService.use(cookieParser('SUPER_SECRET_THING_DO_NOT_DO_THIS_IN_PRODUCTION'));
+ssoService.use(cookieParser(COOKIE_SECRET));
+
+ssoService.use((req, res, next) => {
+  res.locals.username = req.signedCookies[COOKIE_KEY];
+  next();
+});
+
+ssoService.use((req, res, next) => {
+  const { client } = req.query;
+
+  const ssoClient = clients[client];
+  if (!ssoClient) {
+    const error = new Error('Invalid client');
+    error.status = 400;
+
+    // No valid client was provided
+    throw error;
+  }
+
+  res.locals.client = client;
+  next();
+});
+
 ssoService.post('/login', bodyParser.urlencoded({ extended: false }), loginHandler);
+
+ssoService.get('/token', tokenHandler);
+
+ssoService.get('/retrieve', retrieveHandler);
 
 ssoService.use((req, res, next) => {
   const error = new Error(`Resource for '${req.url}' not found`);

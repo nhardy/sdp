@@ -12,8 +12,7 @@ export default class HomeView extends Component { // eslint-disable-line react/p
     return (
       <DefaultLayout className={styles.root}>
         <Helmet title="Login | UTS: HELPS Booking System" />
-        <form method="POST" action="/api/sso/login">
-          <input type="hidden" name="client" value={config.sso.client} />
+        <form method="POST" action={`/api/sso/login?client=${config.sso.client}`}>
           <h1>Login</h1>
           <label htmlFor="username">Staff or student number</label>
           <input type="text" id="username" name="username" autoFocus />
