@@ -1,18 +1,30 @@
+import querystring from 'querystring';
+
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 
 import config from 'app/config';
+import * as appPropTypes from 'app/components/propTypes';
 import DefaultLayout from 'app/layouts/Default';
-
-import styles from './styles.styl';
+import Form from 'app/components/Form';
 
 
 export default class LoginView extends Component { // eslint-disable-line react/prefer-stateless-function
+  static contextTypes = {
+    location: appPropTypes.location,
+  };
+
   render() {
+    const loginParams = {
+      client: config.sso.client,
+      redirect: this.context.location.query.redirect,
+    };
+    const loginUrl = `/api/sso/login?${querystring.stringify(loginParams)}`;
+
     return (
-      <DefaultLayout className={styles.root}>
+      <DefaultLayout>
         <Helmet title="Login | UTS: HELPS Booking System" />
-        <form method="POST" action={`/api/sso/login?client=${config.sso.client}`}>
+        <Form method="POST" action={loginUrl}>
           <h1>Login</h1>
           <label htmlFor="username">Staff or student number</label>
           <input type="text" id="username" name="username" autoFocus />
@@ -20,7 +32,7 @@ export default class LoginView extends Component { // eslint-disable-line react/
           <input type="password" id="password" name="password" />
           <a href="https://email.itd.uts.edu.au/webapps/myaccount/passwordreset/" target="_blank">Forgot password?</a>
           <input type="submit" value="Login" />
-        </form>
+        </Form>
       </DefaultLayout>
     );
   }

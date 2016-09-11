@@ -1,5 +1,3 @@
-import querystring from 'querystring';
-
 import { ensureData } from 'app/actions/sso';
 
 
@@ -11,7 +9,10 @@ export default function requireLogin({ dispatch, getState }) {
     dispatch(ensureData()).then(() => {
       if (!getState().sso.user) {
         replace({
-          pathname: `/login?${querystring.stringify({ redirect: nextState.location.pathname })}`,
+          pathname: '/login',
+          query: {
+            redirect: nextState.location.pathname,
+          },
         });
       }
       callback();

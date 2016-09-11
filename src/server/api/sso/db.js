@@ -9,6 +9,7 @@ export const users = {
     // @see https://youtu.be/8ZtInClXe1Q
     password: 'password',
     email: 'example@student.uts.edu.au',
+    mobile: '+61400555555',
   },
 };
 
@@ -20,6 +21,7 @@ export const clients = {
       'firstName',
       'lastName',
       'email',
+      'mobile',
     ],
   },
 };

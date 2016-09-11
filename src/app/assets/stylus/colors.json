@@ -14,6 +14,7 @@
   "$_paleBrightBlue": "#c8f4ff",
   "$_darkGray": "#303636",
   "$_lightGray": "#b0b0b0",
+  "$_midGray": "#cccccc",
 
   "$pageBackgroundColor": "$_lightishBlue",
   "$backgroundColor": "$_closeWhite",
@@ -27,5 +28,6 @@
   "$brightLinkColor": "$_brightBlue",
   "$brightLinkHoverColor": "$_paleBrightBlue",
   "$borderColor": "$_darkGray",
-  "$footnoteColor": "$_lightGray"
+  "$footnoteColor": "$_lightGray",
+  "$disabledColor": "$_midGray"
 }
