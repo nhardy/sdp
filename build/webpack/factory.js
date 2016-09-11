@@ -90,7 +90,7 @@ export default function webpackFactory({ production = false, client = false }) {
         'babel-polyfill',
         path.resolve(__dirname, '..', '..', 'src', 'client', 'index.js'),
       ].filter(identity),
-      sso: path.resolve(__dirname, '..', '..', 'src', 'app', 'lib', 'sso.js'),
+      sso: path.resolve(__dirname, '..', '..', 'src', 'client', 'sso.js'),
     } : {
       server: [
         'babel-polyfill',

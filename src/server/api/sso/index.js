@@ -4,7 +4,12 @@ import bodyParser from 'body-parser';
 
 import { COOKIE_SECRET, COOKIE_KEY } from 'server/api/sso/constants';
 import { clients } from 'server/api/sso/db';
-import { loginHandler, tokenHandler, retrieveHandler } from 'server/api/sso/handlers';
+import {
+  loginHandler,
+  tokenHandler,
+  retrieveHandler,
+  logoutHandler
+} from 'server/api/sso/handlers';
 
 
 const ssoService = new Express();
@@ -37,6 +42,8 @@ ssoService.post('/login', bodyParser.urlencoded({ extended: false }), loginHandl
 ssoService.get('/token', tokenHandler);
 
 ssoService.get('/retrieve', retrieveHandler);
+
+ssoService.get('/logout', logoutHandler);
 
 ssoService.use((req, res, next) => {
   const error = new Error(`Resource for '${req.url}' not found`);

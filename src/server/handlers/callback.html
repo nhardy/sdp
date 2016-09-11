@@ -13,7 +13,7 @@ var sso = new SSO({
 sso.callback(function (err, params) {
   // TODO: Something on error
   if (err) return;
-  window.location.replace(window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port: '') + (params.redirect || '/'));
+  window.location.replace(window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port: '') + decodeURIComponent(params.redirect));
 });
 </script>
 </head>

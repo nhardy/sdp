@@ -8,6 +8,7 @@ import FontAwesome from 'app/components/FontAwesome';
 
 import GlobalNav from './GlobalNav';
 import Nav from './Nav';
+import Profile from './Profile';
 import styles from './styles.styl';
 
 
@@ -64,6 +65,7 @@ export default class SiteHeader extends Component {
             <FontAwesome className="fa-close" />
           </label>
           <Nav mode="vertical" />
+          <Profile />
         </aside>
       </header>
     );

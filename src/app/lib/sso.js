@@ -3,9 +3,8 @@ import cookies from 'app/lib/cookies';
 
 export default class SSO {
   // FIXME: This would be hosted on a different domain in production
-  constructor({ login = '/api/sso/login', client = 'uts-helps-booking' }) {
+  constructor({ client = 'uts-helps-booking' } = {}) {
     this._cookieKey = '_sso';
-    this._login = login;
     this._client = client;
   }
 
@@ -16,40 +15,6 @@ export default class SSO {
 
   _getCookie() {
     return JSON.parse(cookies.getItem(this._cookieKey));
-  }
-
-  _request({ url, body }, done) {
-    const req = new XMLHttpRequest();
-
-    req.addEventListener('load', () => {
-      let error = null;
-      let response;
-      try {
-        response = JSON.parse(req.responseText);
-
-        if (req.status === 401) throw new Error('Unauthenticated');
-        if (req.status >= 400) {
-          throw new Error(response.error);
-        }
-      } catch (err) {
-        error = err;
-      }
-      done(error, response);
-    });
-
-    req.addEventListener('error', () => {
-      done(new Error('Unable to contact SSO'));
-    });
-
-    req.withCredentials = true;
-    req.open('GET', url);
-    req.send();
-  }
-
-  _getToken(done) {
-    this._request({ url: `${this._login}?client=${this._client}` }, (err, { token, ttl }) => {
-      done(err, { token, ttl });
-    });
   }
 
   callback(done) {
@@ -67,20 +32,7 @@ export default class SSO {
     done(error, params);
   }
 
-  getToken(done) {
-    const cookieToken = this._getCookie();
-    if (cookieToken) {
-      done(null, cookieToken);
-      return;
-    }
-
-    this._getToken((err, { token, ttl }) => {
-      if (err) done(err);
-
-      this._setCookie({ token, ttl });
-      done(null, token);
-    });
+  getToken() {
+    return this._getCookie();
   }
 }
-
-if (window) window.SSO = SSO;

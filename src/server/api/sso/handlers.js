@@ -3,6 +3,8 @@
 //
 // If you do use anything like this in production, please resign immediately from your position.
 // You do not belong in the Information Technology Industry.
+import querystring from 'querystring';
+
 import { pick } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
@@ -35,10 +37,15 @@ export function loginHandler(req, res) {
   }
 
   // The User has authenticated with the SSO service, set a cookie on the login service
-  res.cookie(COOKIE_KEY, username, { signed: true, httpOnly: true });
+  res.cookie(COOKIE_KEY, username, { signed: true, httpOnly: true, path: '/api/sso' });
 
   const { token, ttl } = newSession(res.locals.client, username);
-  res.redirect(302, `${callback}?token=${token}&ttl=${ttl}`);
+  const params = {
+    token,
+    ttl,
+    redirect: req.query.redirect || '/',
+  };
+  res.redirect(302, `${callback}?${querystring.stringify(params)}`);
 }
 
 export function tokenHandler(req, res) {
@@ -69,4 +76,16 @@ export function retrieveHandler(req, res) {
   }
 
   res.send(pick(user, clients[res.locals.client].scope));
+}
+
+export function logoutHandler(req, res) {
+  const { client } = res.locals;
+  const { callback } = clients[client];
+  const params = {
+    token: '',
+    ttl: 0,
+    redirect: req.query.redirect || '/',
+  };
+  res.clearCookie(COOKIE_KEY, { path: '/api/sso' });
+  res.redirect(302, `${callback}?${querystring.stringify(params)}`);
 }

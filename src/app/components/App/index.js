@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import * as appPropTypes from 'app/components/propTypes';
+import { ensureData } from 'app/actions/sso';
 
 
 import 'app/assets/stylus/reset.styl';
@@ -9,10 +11,12 @@ import 'font-awesome/css/font-awesome.min.css';
 import styles from './styles.styl';
 
 
+@connect(null, { ensureData })
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.node,
     location: appPropTypes.location,
+    ensureData: PropTypes.func,
   };
 
   static childContextTypes = {
@@ -23,6 +27,10 @@ export default class App extends Component {
     return {
       location: this.props.location,
     };
+  }
+
+  componentDidMount() {
+    this.props.ensureData();
   }
 
   render() {

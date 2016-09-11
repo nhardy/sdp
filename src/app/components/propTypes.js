@@ -14,3 +14,9 @@ export const location = PropTypes.shape({
   hash: PropTypes.string,
   query: PropTypes.object,
 });
+
+export const user = PropTypes.shape({
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  email: PropTypes.string,
+});

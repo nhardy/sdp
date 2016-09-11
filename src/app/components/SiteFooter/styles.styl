@@ -75,10 +75,14 @@ $padding = 24px
   text-decoration: none
 
 .social
-  flex: 2 0 auto
   display: flex
   justify-content: space-between
   align-items: center
+
+  flex: 2 0 auto
+
+  +upTo($med)
+    flex-basis: 100%
 
   a:not(:last-child)
     margin-right: 8px
