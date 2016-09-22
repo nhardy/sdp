@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { routerShape } from 'react-router/lib/PropTypes';
 import Helmet from 'react-helmet';
 import cx from 'classnames';
 
@@ -26,8 +28,10 @@ import styles from './styles.styl';
     smsNotifications: state.settings.smsNotifications,
   };
 }, { getSettings, saveSettings })
+@withRouter
 export default class SettingsView extends Component {
   static propTypes = {
+    router: routerShape,
     name: PropTypes.string,
     email: PropTypes.string,
     ssoMobile: PropTypes.string,
@@ -76,7 +80,9 @@ export default class SettingsView extends Component {
     if (userMobile !== this.props.ssoMobile) {
       mobile = userMobile;
     }
-    this.props.saveSettings({ mobile, emailNotifications, smsNotifications });
+    this.props.saveSettings({ mobile, emailNotifications, smsNotifications }).then(() => {
+      this.props.router.push('/');
+    });
   }
 
   render() {

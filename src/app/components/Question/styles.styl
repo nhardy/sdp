@@ -1,0 +1,38 @@
+@import '~app/assets/stylus'
+
+
+.root
+  border: 1px solid $borderColor
+  border-radius: 4px
+
+  &:not(:last-child)
+    margin-bottom: 16px
+
+  padding: $minPadding
+
+  +from($sml)
+    padding: $smlPadding
+
+  +from($med)
+    padding: $medPadding
+
+  +from($lge)
+    padding: $lgePadding
+
+  +from($xlg)
+    padding: $xlgPadding
+
+.question
+  color: $highlightColor
+  font-weight: 600
+  cursor: pointer
+
+.answer
+  display: none
+  margin-top: 8px
+
+  &::before
+    content: '> '
+
+  &.shown
+    display: block
