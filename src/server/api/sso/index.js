@@ -8,7 +8,7 @@ import {
   loginHandler,
   tokenHandler,
   retrieveHandler,
-  logoutHandler
+  logoutHandler,
 } from 'server/api/sso/handlers';
 
 

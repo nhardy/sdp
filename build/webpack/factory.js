@@ -109,10 +109,7 @@ export default function webpackFactory({ production = false, client = false }) {
     target: client ? 'web' : 'node',
 
     externals: [!client && nodeExternals({
-      whitelist: [
-        'font-awesome/css/font-awesome.min.css',
-        'gemini-scrollbar/gemini-scrollbar.css',
-      ],
+      whitelist: [/\.css$/],
     })].filter(identity),
 
     devtool: !production || !client

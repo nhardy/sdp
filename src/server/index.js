@@ -2,6 +2,7 @@ import Express from 'express';
 
 import config from 'app/config';
 import ssoService from 'server/api/sso';
+import helpsService from 'server/api/helps';
 import callbackHandler from 'server/handlers/callback';
 import mainMiddleware from 'server/middleware/main';
 import errorMiddleware from 'server/middleware/error';
@@ -20,6 +21,8 @@ app.get('/favicon.ico', (req, res) => {
 app.use('/dist', Express.static('dist'));
 
 app.use('/api/sso', ssoService);
+
+app.use('/api/helps', helpsService);
 
 app.get('/callback', callbackHandler);
 

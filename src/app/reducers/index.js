@@ -3,6 +3,7 @@ import { routerReducer } from 'react-router-redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
 
 import sso from './sso';
+import settings from './settings';
 
 
 export default combineReducers({
@@ -10,4 +11,5 @@ export default combineReducers({
   routing: routerReducer,
 
   sso,
+  settings,
 });

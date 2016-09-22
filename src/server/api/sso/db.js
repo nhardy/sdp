@@ -3,6 +3,7 @@ import config from 'app/config';
 
 export const users = {
   1234567: {
+    studentId: 1234567,
     firstName: 'Nathan',
     lastName: 'Hardy',
     // NEVER EVER store passwords in plaintext
@@ -18,6 +19,7 @@ export const clients = {
     // In production, this would include domain/port
     callback: '/callback',
     scope: [
+      'studentId',
       'firstName',
       'lastName',
       'email',
