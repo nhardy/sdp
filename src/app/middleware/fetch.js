@@ -6,7 +6,7 @@ import { checkStatus } from 'app/lib/fetch';
 
 
 export default function fetchMiddleware() {
-  return next => action => {
+  return next => (action) => {
     const { types, endpoint, ...rest } = action;
     if (!endpoint) {
       return next(action);
@@ -19,14 +19,14 @@ export default function fetchMiddleware() {
     const search = isEmpty(query) ? '' : `?${querystring.stringify(query)}`;
     return fetch(`${url}${search}`, requestOptions)
       .then(checkStatus)
-      .then((raw) => raw.json())
+      .then(raw => raw.json())
       .then(
-        (response) => next({
+        response => next({
           ...rest,
           response,
           type: SUCCESS,
         }),
-        (error) => next({
+        error => next({
           ...rest,
           error,
           type: FAILURE,
