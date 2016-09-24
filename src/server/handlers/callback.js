@@ -1,4 +1,4 @@
-import { template } from 'lodash';
+import { template } from 'lodash-es';
 
 import config from 'app/config';
 import assetManifest from 'server/lib/assetManifest';

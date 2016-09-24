@@ -5,7 +5,7 @@
 // You do not belong in the Information Technology Industry.
 import querystring from 'querystring';
 
-import { pick } from 'lodash';
+import { pick } from 'lodash-es';
 import { v4 as uuid } from 'uuid';
 
 import { COOKIE_KEY } from 'server/api/sso/constants';
