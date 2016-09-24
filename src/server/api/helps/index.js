@@ -5,6 +5,7 @@ import { authentication } from 'server/api/helps/middleware';
 import {
   getSettingsHandler,
   postSettingsHandler,
+  simpleProxy,
 } from 'server/api/helps/handlers';
 
 
@@ -12,6 +13,8 @@ const helpsService = new Express();
 
 helpsService.get('/settings', authentication, getSettingsHandler);
 helpsService.post('/settings', authentication, bodyParser.json(), postSettingsHandler);
+
+helpsService.use('/workshop', simpleProxy('/workshop'));
 
 helpsService.use((req, res, next) => {
   const error = new Error(`Resource for '${req.url}' not found`);

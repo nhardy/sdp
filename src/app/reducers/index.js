@@ -4,6 +4,7 @@ import { reducer as reduxAsyncConnect } from 'redux-connect';
 
 import sso from './sso';
 import settings from './settings';
+import classes from './classes';
 
 
 export default combineReducers({
@@ -12,4 +13,5 @@ export default combineReducers({
 
   sso,
   settings,
+  classes,
 });

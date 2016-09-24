@@ -1,5 +1,7 @@
 import qs from 'querystring';
 
+import request from 'request';
+
 import config from 'app/config';
 import { checkStatus } from 'app/lib/fetch';
 import { rejectOnError } from 'server/api/helps/lib';
@@ -14,7 +16,7 @@ export function getSettingsHandler(req, res, next) { // eslint-disable-line no-u
     },
   })
     .then(checkStatus)
-    .then((raw) => raw.json())
+    .then(raw => raw.json())
     .then(rejectOnError)
     .then((response) => {
       res.send({
@@ -50,7 +52,7 @@ export function postSettingsHandler(req, res, next) {
     }),
   })
     .then(checkStatus)
-    .then((raw) => raw.json())
+    .then(raw => raw.json())
     .then(rejectOnError)
     .then(() => {
       settings[studentId] = {
@@ -64,4 +66,17 @@ export function postSettingsHandler(req, res, next) {
     .catch((error) => {
       next(error);
     });
+}
+
+// NOTE: DO NOT do this in production
+export function simpleProxy(prefix) {
+  return (req, res) => {
+    const url = `${config.helps.baseUrl}${prefix}${req.url}`;
+    req.pipe(request({
+      url,
+      headers: {
+        ...config.helps.headers,
+      },
+    })).pipe(res);
+  };
 }

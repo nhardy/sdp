@@ -1,0 +1,70 @@
+@import '~app/assets/stylus'
+
+
+.root
+  display: block
+
+.category
+  height: 250px
+  z-index: $zIndexCategory
+
+  padding: $minGutter
+
+  +from($sml)
+    padding: $smlGutter
+
+  +from($med)
+    padding: $medGutter
+
+  +from($lge)
+    padding: $lgeGutter
+
+  +from($xlg)
+    padding: $xlgGutter
+
+  &:not(:last-child)
+    border-bottom: 2px solid $separatorColor
+
+.link
+  display: flex
+  height: 100%
+  flex-direction: row
+  justify-content: space-between
+
+.description
+  flex: 1 1 auto
+  position: relative
+
+  margin-right: $minGutter
+
+  +from($sml)
+    margin-right: $smlGutter
+
+  +from($med)
+    margin-right: $medGutter
+
+  +from($lge)
+    margin-right: $lgeGutter
+
+  +from($xlg)
+    margin-right: $xlgGutter
+
+.heading
+  position: absolute
+  z-index: 1
+  top: 50%
+  transform: translateY(-50%)
+  font-size: 28px
+
+.imageWrapper
+  flex: 0 0 45%
+  position: relative
+  height: 100%
+  overflow: hidden
+
+.image
+  height: 100%
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
