@@ -72,11 +72,17 @@ export function postSettingsHandler(req, res, next) {
 export function simpleProxy(prefix) {
   return (req, res) => {
     const url = `${config.helps.baseUrl}${prefix}${req.url}`;
-    req.pipe(request({
-      url,
-      headers: {
-        ...config.helps.headers,
-      },
-    })).pipe(res);
+    req.pipe(
+      request({
+        url,
+        headers: {
+          ...config.helps.headers,
+        },
+      }).on('response', (response) => {
+        response.on('data', (data) => {
+          if (JSON.parse(data).IsSuccess === false) res.status(500);
+        });
+      })
+    ).pipe(res);
   };
 }
