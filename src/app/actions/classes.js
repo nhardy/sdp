@@ -21,6 +21,7 @@ export function getWorkshopSets() {
 export function getWorkshops(workshopSetId) {
   return {
     types: [GET_WORKSHOPS_REQUEST, GET_WORKSHOPS_SUCCESS, GET_WORKSHOPS_FAILURE],
+    workshopSetId,
     endpoint: {
       url: `${config.helpsProxied.baseUrl}/workshop/search`,
       query: {

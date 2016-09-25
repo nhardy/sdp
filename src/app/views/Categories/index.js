@@ -3,6 +3,7 @@ import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 
+import { setRouteError } from 'app/actions/routeError';
 import { getWorkshopSets } from 'app/actions/classes';
 import DefaultLayout from 'app/layouts/Default';
 import CategoriesList from 'app/components/CategoriesList';
@@ -11,10 +12,17 @@ import CategoriesList from 'app/components/CategoriesList';
 @asyncConnect([
   {
     promise: ({ store: { dispatch, getState } }) => {
-      const loaded = getState().classes.workshopSets.loaded;
-      if (loaded) return Promise.resolve();
+      let promise;
+      const loaded = () => getState().classes.workshopSets.loaded;
+      if (loaded()) {
+        promise = Promise.resolve();
+      } else {
+        promise = dispatch(getWorkshopSets());
+      }
 
-      return dispatch(getWorkshopSets());
+      return promise.then(() => {
+        if (!loaded()) dispatch(setRouteError());
+      });
     },
   },
 ])

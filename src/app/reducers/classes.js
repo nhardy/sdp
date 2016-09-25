@@ -14,11 +14,7 @@ const initialState = {
     loaded: false,
     items: [],
   },
-  workshops: {
-    loading: false,
-    loaded: false,
-    items: [],
-  },
+  workshops: {},
 };
 
 export default function classesReducer(state = initialState, action = {}) {
@@ -58,7 +54,10 @@ export default function classesReducer(state = initialState, action = {}) {
         ...state,
         workshops: {
           ...state.workshops,
-          loading: true,
+          [action.workshopSetId]: {
+            ...state.workshops[action.workshopSetId],
+            loading: true,
+          },
         },
       };
 
@@ -67,9 +66,12 @@ export default function classesReducer(state = initialState, action = {}) {
         ...state,
         workshops: {
           ...state.workshops,
-          loading: false,
-          loaded: true,
-          items: action.response.Results,
+          [action.workshopSetId]: {
+            ...state.workshops[action.workshopSetId],
+            loading: false,
+            loaded: true,
+            items: action.response.Results,
+          },
         },
       };
 
@@ -78,8 +80,11 @@ export default function classesReducer(state = initialState, action = {}) {
         ...state,
         workshops: {
           ...state.workshops,
-          loading: false,
-          error: action.error,
+          [action.workshopSetId]: {
+            ...state.workshops[action.workshopSetId],
+            loading: false,
+            error: action.error,
+          },
         },
       };
 

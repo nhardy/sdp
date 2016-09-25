@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
+import { find } from 'lodash-es';
 import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 
+import { setRouteError } from 'app/actions/routeError';
 import { getWorkshopSets, getWorkshops } from 'app/actions/classes';
 import DefaultLayout from 'app/layouts/Default';
 // import WorkshopsList from 'app/components/WorkshopsList';
@@ -10,19 +12,29 @@ import DefaultLayout from 'app/layouts/Default';
 
 @asyncConnect([
   {
-    promise: ({ store: { dispatch, getState } }) => {
-      let promise;
-      const workshopSets = getState().classes.workshopSets;
-      if (workshopSets.loaded) {
-        promise = Promise.resolve();
-      } else {
-        promise = dispatch(getWorkshopSets());
+    promise: async ({ store: { dispatch, getState }, params: { workshopSetId } }) => {
+      const workshopSets = () => getState().classes.workshopSets;
+      await workshopSets().loaded
+        ? Promise.resolve()
+        : dispatch(getWorkshopSets());
+
+      if (!workshopSets().loaded) {
+        dispatch(setRouteError());
+        return;
       }
 
-      return promise.then(() => {
-        const workshopSetId = 3;
-        return dispatch(getWorkshops(workshopSetId));
-      });
+      const workshop = find(workshopSets().items, { id: parseInt(workshopSetId, 10) });
+      if (!workshop) {
+        dispatch(setRouteError({ status: 404 }));
+        return;
+      }
+
+      const workshops = () => getState().classes.workshops[workshopSetId] || {};
+      await workshops().loaded
+        ? Promise.resolve()
+        : dispatch(getWorkshops(workshopSetId));
+
+      if (!workshops().loaded) dispatch(setRouteError());
     },
   },
 ])
