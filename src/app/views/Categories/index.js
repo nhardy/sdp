@@ -1,28 +1,25 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 
 import { setRouteError } from 'app/actions/routeError';
 import { getWorkshopSets } from 'app/actions/classes';
+import * as appPropTypes from 'app/components/propTypes';
 import DefaultLayout from 'app/layouts/Default';
 import CategoriesList from 'app/components/CategoriesList';
 
 
 @asyncConnect([
   {
-    promise: ({ store: { dispatch, getState } }) => {
-      let promise;
+    promise: async ({ store: { dispatch, getState } }) => {
       const loaded = () => getState().classes.workshopSets.loaded;
-      if (loaded()) {
-        promise = Promise.resolve();
-      } else {
-        promise = dispatch(getWorkshopSets());
+
+      if (!loaded()) {
+        await dispatch(getWorkshopSets());
       }
 
-      return promise.then(() => {
-        if (!loaded()) dispatch(setRouteError());
-      });
+      if (!loaded()) dispatch(setRouteError());
     },
   },
 ])
@@ -31,9 +28,9 @@ import CategoriesList from 'app/components/CategoriesList';
     items: state.classes.workshopSets.items,
   };
 })
-export default class CategoriesView extends Component {
+export default class CategoriesView extends Component { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
-    items: PropTypes.array,
+    items: appPropTypes.workshopSets,
   };
 
   render() {

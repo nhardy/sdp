@@ -1,0 +1,24 @@
+@import '~app/assets/stylus'
+
+
+.root
+  display: block
+
+.workshop
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+  propertyPadding('padding')
+
+  &:not(:last-child)
+    border-bottom: 2px solid $separatorColor
+
+.topic
+  display: inline-block
+  propertyGutter('margin-right')
+
+.time
+  display: inline-block
+  white-space: nowrap
+  color: $detailColor

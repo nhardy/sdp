@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
 
+import Button from 'app/components/Button';
+import FontAwesome from 'app/components/FontAwesome';
+
 import styles from './styles.styl';
 
 
@@ -23,7 +26,12 @@ export default class Question extends Component {
     const { shown } = this.state;
     return (
       <div className={styles.root}>
-        <span className={styles.question} onClick={this.toggle}>{question}</span>
+        <Button className={styles.question} onClick={this.toggle}>
+          <span className={styles.text}>{question}</span>
+          <div className={styles.button}>
+            <FontAwesome className={cx({ 'fa-chevron-down': !shown, 'fa-chevron-up': shown })} size={20} />
+          </div>
+        </Button>
         <div className={cx(styles.answer, { [styles.shown]: shown })}>
           {children}
         </div>

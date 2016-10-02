@@ -1,4 +1,4 @@
-import config from 'app/config';
+import baseUrl from 'app/lib/endpoints';
 
 
 export const GET_WORKSHOP_SETS_REQUEST = 'GET_WORKSHOP_SETS_REQUEST';
@@ -13,7 +13,7 @@ export function getWorkshopSets() {
   return {
     types: [GET_WORKSHOP_SETS_REQUEST, GET_WORKSHOP_SETS_SUCCESS, GET_WORKSHOP_SETS_FAILURE],
     endpoint: {
-      url: `${config.helpsProxied.baseUrl}/workshop/workshopSets/true`,
+      url: `${baseUrl()}/workshop/workshopSets/true`,
     },
   };
 }
@@ -23,8 +23,9 @@ export function getWorkshops(workshopSetId) {
     types: [GET_WORKSHOPS_REQUEST, GET_WORKSHOPS_SUCCESS, GET_WORKSHOPS_FAILURE],
     workshopSetId,
     endpoint: {
-      url: `${config.helpsProxied.baseUrl}/workshop/search`,
+      url: `${baseUrl()}/workshop/search`,
       query: {
+        active: 'true',
         workshopSetId,
       },
     },

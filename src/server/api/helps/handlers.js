@@ -70,19 +70,32 @@ export function postSettingsHandler(req, res, next) {
 
 // NOTE: DO NOT do this in production
 export function simpleProxy(prefix) {
-  return (req, res) => {
+  return (req, res, next) => {
     const url = `${config.helps.baseUrl}${prefix}${req.url}`;
     req.pipe(
       request({
         url,
+        gzip: true,
         headers: {
           ...config.helps.headers,
         },
-      }).on('response', (response) => {
-        response.on('data', (data) => {
-          if (JSON.parse(data).IsSuccess === false) res.status(500);
-        });
+      }, (err, response, raw) => {
+        if (err) {
+          next(err);
+          return;
+        }
+
+        const body = JSON.parse(raw);
+
+        if (!body.IsSuccess) {
+          const error = new Error(body.DisplayMessage || 'Unknown Error');
+          error.status = 500;
+          next(error);
+          return;
+        }
+
+        res.status(200).json(body);
       })
-    ).pipe(res);
+    );
   };
 }

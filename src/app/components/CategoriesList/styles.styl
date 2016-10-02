@@ -8,19 +8,7 @@
   height: 250px
   z-index: $zIndexCategory
 
-  padding: $minGutter
-
-  +from($sml)
-    padding: $smlGutter
-
-  +from($med)
-    padding: $medGutter
-
-  +from($lge)
-    padding: $lgeGutter
-
-  +from($xlg)
-    padding: $xlgGutter
+  propertyPadding('padding')
 
   &:not(:last-child)
     border-bottom: 2px solid $separatorColor
@@ -35,19 +23,7 @@
   flex: 1 1 auto
   position: relative
 
-  margin-right: $minGutter
-
-  +from($sml)
-    margin-right: $smlGutter
-
-  +from($med)
-    margin-right: $medGutter
-
-  +from($lge)
-    margin-right: $lgeGutter
-
-  +from($xlg)
-    margin-right: $xlgGutter
+  propertyGutter('margin-right')
 
 .heading
   position: absolute

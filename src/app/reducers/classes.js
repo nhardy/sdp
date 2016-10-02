@@ -70,7 +70,12 @@ export default function classesReducer(state = initialState, action = {}) {
             ...state.workshops[action.workshopSetId],
             loading: false,
             loaded: true,
-            items: action.response.Results,
+            items: action.response.Results.map(({ WorkshopId, StartDate, EndDate, ...props }) => ({
+              id: WorkshopId,
+              startDate: StartDate,
+              endDate: EndDate,
+              ...props,
+            })),
           },
         },
       };

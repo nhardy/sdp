@@ -1,14 +1,11 @@
 export default {
   port: 8000,
   helps: {
-    baseUrl: 'http://group3helps.cloudapp.net/api',
+    baseUrl: 'http://uts-helps.azurewebsites.net/api',
     headers: {
       AppKey: '31281',
       Accept: 'application/json',
     },
-  },
-  helpsProxied: {
-    baseUrl: 'http://localhost:8000/api/helps',
   },
   sso: {
     client: 'uts-helps-booking',
@@ -16,4 +13,5 @@ export default {
     token: '/api/sso/token',
     retrieve: '/api/sso/retrieve',
   },
+  timezone: 'Australia/Sydney',
 };

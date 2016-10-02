@@ -105,7 +105,7 @@ export default class SettingsView extends Component {
               <Label htmlFor="email">Email:</Label>
               <input type="email" id="email" value={email} disabled />
               <Label htmlFor="mobile">Mobile:</Label>
-              <input type="tel" id="mobile" ref={(ref) => (this._mobile = ref)} defaultValue={mobile || ssoMobile} onChange={this.updateMobile} />
+              <input type="tel" id="mobile" ref={ref => (this._mobile = ref)} defaultValue={mobile || ssoMobile} onChange={this.updateMobile} />
               <CheckboxWithLabel defaultChecked={emailNotifications} onChange={this.updateEmailNotifications}>Email Notifications:</CheckboxWithLabel>
               <CheckboxWithLabel defaultChecked={smsNotifications} onChange={this.updateSmsNotifications}>SMS Notifications:</CheckboxWithLabel>
               <input type="button" value="Save" onClick={this.save} />

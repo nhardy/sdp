@@ -6,7 +6,7 @@ import config from 'app/config';
 import * as appPropTypes from 'app/components/propTypes';
 
 
-@connect((state) => ({
+@connect(state => ({
   loaded: state.sso.loaded,
   user: state.sso.user,
 }))
