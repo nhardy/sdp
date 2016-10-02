@@ -7,6 +7,7 @@ import combineLoaders from 'webpack-combine-loaders';
 import nodeExternals from 'webpack-node-externals';
 import {
   BannerPlugin,
+  ContextReplacementPlugin,
   DefinePlugin,
   HotModuleReplacementPlugin,
   LoaderOptionsPlugin,
@@ -139,8 +140,9 @@ export default function webpackFactory({ production = false, client = false, wri
                       method: 'coroutine',
                     },
                   ],
+                  !production && 'transform-regenerator',
                   'transform-decorators-legacy',
-                ],
+                ].filter(identity),
               },
             },
           ].filter(identity),
@@ -156,7 +158,22 @@ export default function webpackFactory({ production = false, client = false, wri
           },
         },
         {
+          test: /moment-timezone\/data\/packed\/latest.json/,
+          loaders: [
+            {
+              loader: 'json',
+            },
+            {
+              loader: 'moment-timezone-data-loader',
+              query: {
+                search: 'Australia',
+              },
+            },
+          ],
+        },
+        {
           test: /\.json$/,
+          exclude: /moment-timezone\/data\/packed\/latest.json/,
           loader: 'json',
         },
         {
@@ -196,6 +213,7 @@ export default function webpackFactory({ production = false, client = false, wri
       new ProvidePlugin({
         fetch: 'isomorphic-fetch',
       }),
+      new ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en-au)$/),
       new NoErrorsPlugin(),
       !production && new HotModuleReplacementPlugin(),
       new LoaderOptionsPlugin({
@@ -228,6 +246,12 @@ export default function webpackFactory({ production = false, client = false, wri
       extensions: ['.json', '.js', '.styl'],
       modules: [
         'src',
+        'node_modules',
+      ],
+    },
+    resolveLoader: {
+      modules: [
+        path.join(__dirname, 'loaders'),
         'node_modules',
       ],
     },

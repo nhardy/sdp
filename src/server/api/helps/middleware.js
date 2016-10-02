@@ -16,7 +16,7 @@ export function authentication(req, res, next) { // eslint-disable-line import/p
 
   fetch(`http://localhost:${config.port}${config.sso.retrieve}?${qs.stringify({ client, token })}`)
     .then(checkStatus)
-    .then((raw) => raw.json())
+    .then(raw => raw.json())
     .then((response) => {
       res.locals.studentId = response.studentId;
       next();

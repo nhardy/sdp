@@ -1,9 +1,10 @@
 export default {
   port: 8000,
   helps: {
-    baseUrl: 'http://group3helps.cloudapp.net/api',
+    baseUrl: 'http://uts-helps.azurewebsites.net/api',
     headers: {
       AppKey: '31281',
+      Accept: 'application/json',
     },
   },
   sso: {
@@ -12,4 +13,5 @@ export default {
     token: '/api/sso/token',
     retrieve: '/api/sso/retrieve',
   },
+  timezone: 'Australia/Sydney',
 };

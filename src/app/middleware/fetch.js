@@ -1,6 +1,6 @@
 import querystring from 'querystring';
 
-import isEmpty from 'lodash/isEmpty';
+import { isEmpty } from 'lodash-es';
 
 import { checkStatus } from 'app/lib/fetch';
 

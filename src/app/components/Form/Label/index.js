@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import noop from 'lodash/noop';
+import { noop } from 'lodash-es';
 import cx from 'classnames';
 
 import styles from './styles.styl';

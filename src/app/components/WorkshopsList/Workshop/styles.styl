@@ -1,0 +1,86 @@
+@import '~app/assets/stylus'
+
+
+.root
+  propertyPadding('padding')
+
+  &:not(:last-child)
+    border-bottom: 2px solid $separatorColor
+
+.basic
+  width: 100%
+  display: flex
+  flex-direction: row
+  align-items: center
+
+.topic
+  flex: 1 1 auto
+  display: inline-block
+  propertyGutter('margin-right')
+  font-weight: 600
+
+.time
+  flex: 0 0 auto
+  display: inline-block
+  propertyGutter('margin-right')
+  text-align: right
+  color: $detailColor
+
+.toggle
+  flex: 0 0 auto
+
+.info
+  margin-top: 0
+  height: 0
+  overflow: hidden
+  padding-bottom: .25em
+  opacity: 0
+  z-index: -1
+  transition: all 250ms ease-in-out
+
+  &.shown
+    margin-top: 8px
+    height: auto
+    opacity: 1
+    z-index: initial
+
+.data
+  width: 100%
+  border-collapse: collapse
+  border-style: hidden
+  propertyGutter('margin-bottom')
+
+  td
+    border: 8px solid transparent
+
+    &:first-child
+      color: $detailColor
+
+.values
+  // For a table `width: 100%` for the column is like setting `flex-grow` >= 1
+  width: 100%
+
+.book
+  display: inline-block
+  width: 100%
+  text-decoration: none
+  cursor: pointer
+  text-align: center
+  font-size: 22px
+  padding: 8px
+  border-radius: 4px
+  text-transform: uppercase
+  letter-spacing: 2px
+  font-weight: 500
+  background: $themeColor
+  transition: background 250ms ease-in-out
+  color: $backgroundColor
+  text-shadow: 0 -1px 0 rgba($_black, 0.3);
+  border: 1px solid $highlightColor
+
+  &:hover
+    background: $highlightColor
+
+  +from($sml)
+    width: $min
+

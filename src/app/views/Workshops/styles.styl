@@ -1,0 +1,33 @@
+@import '~app/assets/stylus'
+
+
+.imageWrapper
+  position: relative
+
+.headingGroup
+  position: absolute
+  width: 100%
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  propertyPadding('padding')
+  color: $backgroundColor
+  text-align: center
+  text-shadow: 1px 1px 12px $textColor
+
+.category
+  font-size: 32px
+
+  +from($med)
+    font-size: 36px
+
+  +from($lge)
+    font-size: 40px
+
+.direction
+  font-size: 20px
+  margin-top: 8px
+
+  +from($med)
+    font-size: 24px
+    margin-top: 12px

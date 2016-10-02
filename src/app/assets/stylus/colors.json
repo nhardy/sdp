@@ -29,5 +29,6 @@
   "$brightLinkHoverColor": "$_paleBrightBlue",
   "$borderColor": "$_darkGray",
   "$footnoteColor": "$_lightGray",
-  "$disabledColor": "$_midGray"
+  "$disabledColor": "$_midGray",
+  "$separatorColor": "$_lightGray"
 }
