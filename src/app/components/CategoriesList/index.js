@@ -6,7 +6,7 @@ import placeholderImg from 'app/assets/images/table.jpeg';
 import styles from './styles.styl';
 
 
-function Category({ id, name }) {
+const Category = ({ id, name }) => {
   return (
     <li className={styles.category}>
       <Link className={styles.link} to={`/categories/${id}`}>
@@ -19,14 +19,14 @@ function Category({ id, name }) {
       </Link>
     </li>
   );
-}
+};
 
 Category.propTypes = {
   id: PropTypes.number,
   name: PropTypes.string,
 };
 
-function CategoriesList({ items }) {
+const CategoriesList = ({ items }) => {
   return (
     <ul className={styles.root}>
       {items.map(({ id, name }) => (
@@ -34,7 +34,7 @@ function CategoriesList({ items }) {
       ))}
     </ul>
   );
-}
+};
 
 CategoriesList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({

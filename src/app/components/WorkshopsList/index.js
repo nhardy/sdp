@@ -7,20 +7,20 @@ import * as appPropTypes from 'app/components/propTypes';
 import styles from './styles.styl';
 
 
-function Workshop({ topic, startDate }) {
+const Workshop = ({ topic, startDate }) => {
   return (
     <li className={styles.workshop}>
       <span className={styles.topic}>{topic}</span>
       <span className={styles.time}>{moment.tz(startDate, config.timezone).calendar()}</span>
     </li>
   );
-}
+};
 
 Workshop.propTypes = {
   ...appPropTypes._workshop,
 };
 
-function WorkshopsList({ items }) {
+const WorkshopsList = ({ items }) => {
   return (
     <ul className={styles.root}>
       {items.map(item => (
@@ -28,7 +28,7 @@ function WorkshopsList({ items }) {
       ))}
     </ul>
   );
-}
+};
 
 WorkshopsList.propTypes = {
   items: appPropTypes.workshops,
