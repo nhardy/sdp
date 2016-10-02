@@ -14,10 +14,10 @@ function FaqView() {
       <h1 className={styles.heading}>Frequently Asked Questions</h1>
       <h2 className={styles.category}>About the HELPS programs</h2>
       <Question question="Who can use HELPS?">
-        Any student enrolled in any faculty at UTS, and all members of UTS staff
+        Any student enrolled in any faculty at UTS, and all members of UTS staff.
       </Question>
       <Question question="Where is HELPS?">
-        HELPS is located on Building 1, Level 3 , room 8 (opposite the Careers service)
+        HELPS is located on Building 1, Level 3 , room 8 (opposite the Careers service).
       </Question>
       <Question question="How much does it cost?">
         Services are free of tuition fees for non-credit workshops and individual consultations.
@@ -39,10 +39,12 @@ function FaqView() {
       </Question>
       <Question question="My lecturer says I need to improve my grammar. Can you help me?">
         Yes. Please check out our <a href="http://www.ssu.uts.edu.au/helps/index.html">website</a>
+        {' '}
         or <a href="http://www.ssu.uts.edu.au/helps/resources/">learning resources</a>.
       </Question>
       <Question question="Can you help me with my pronunciation?">
         Yes. Please check out our <a href="http://www.ssu.uts.edu.au/helps/index.html">website</a>
+        {' '}
         or <a href="http://www.ssu.uts.edu.au/helps/resources/">learning resources</a>.
       </Question>
       <Question question="Can I practise my seminar presentation with someone?">
