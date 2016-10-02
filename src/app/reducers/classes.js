@@ -1,3 +1,4 @@
+import { camelCaseObject } from 'app/lib/util';
 import {
   GET_WORKSHOP_SETS_REQUEST,
   GET_WORKSHOP_SETS_SUCCESS,
@@ -70,12 +71,11 @@ export default function classesReducer(state = initialState, action = {}) {
             ...state.workshops[action.workshopSetId],
             loading: false,
             loaded: true,
-            items: action.response.Results.map(({ WorkshopId, StartDate, EndDate, ...props }) => ({
-              id: WorkshopId,
-              startDate: StartDate,
-              endDate: EndDate,
-              ...props,
-            })),
+            items: action.response.Results.map(camelCaseObject)
+              .map(({ workshopId, ...props }) => ({
+                id: workshopId,
+                ...props,
+              })),
           },
         },
       };

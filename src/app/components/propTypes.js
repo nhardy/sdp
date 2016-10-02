@@ -36,6 +36,8 @@ export const _workshop = {
   id: PropTypes.number.isRequired,
   topic: PropTypes.string.isRequired,
   startDate: iso8601,
+  endDate: iso8601,
+  campus: PropTypes.string.isRequired,
 };
 export const workshop = PropTypes.shape(_workshop);
 
