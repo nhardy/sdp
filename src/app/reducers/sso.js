@@ -46,7 +46,6 @@ export default function ssoReducer(state = initialState, action = {}) {
       return {
         ...state,
         token: action.token,
-        loaded: true,
       };
 
     case SSO_RETRIEVE_REQUEST:
@@ -58,6 +57,7 @@ export default function ssoReducer(state = initialState, action = {}) {
       return {
         ...state,
         user: action.response,
+        loaded: true,
         error: null,
       };
 
@@ -66,6 +66,7 @@ export default function ssoReducer(state = initialState, action = {}) {
         ...state,
         token: null,
         user: null,
+        loaded: true,
         error: true,
       };
 
