@@ -30,4 +30,7 @@ app.get('/callback', callbackHandler);
 app.use(mainMiddleware);
 app.use(errorMiddleware);
 
-app.listen(config.port + (__DEVELOPMENT__ ? 1 : 0));
+let port = config.port;
+if (__DEVELOPMENT__) port += 1;
+
+app.listen(port);

@@ -1,5 +1,5 @@
 export default {
-  port: 8000,
+  port: process.env.PORT || 8000,
   helps: {
     baseUrl: 'http://uts-helps.azurewebsites.net/api',
     headers: {
