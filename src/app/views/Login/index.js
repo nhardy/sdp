@@ -53,7 +53,7 @@ export default class LoginView extends Component {
     return (
       <DefaultLayout>
         <Helmet title="Login | UTS: HELPS Booking System" />
-        {(loaded || willRedirect) && (
+        {loaded && !willRedirect && (
           <Form method="POST" action={loginUrl}>
             <h1>Login</h1>
             <label htmlFor="username">Staff or student number</label>

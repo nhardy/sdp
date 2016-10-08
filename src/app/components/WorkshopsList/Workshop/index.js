@@ -66,7 +66,7 @@ export default class Workshop extends Component {
               </tr>
             </tbody>
           </table>
-          <Link className={styles.book} to={`/book?id=${id}`}>{availability ? 'Book this session' : 'Add to waiting list'}</Link>
+          <Link className={styles.book} to={`/workshops/${id}`}>{availability ? 'Book this session' : 'Add to waiting list'}</Link>
         </div>
       </li>
     );
