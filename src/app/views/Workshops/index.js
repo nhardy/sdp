@@ -19,9 +19,7 @@ import styles from './styles.styl';
   {
     promise: async ({ store: { dispatch, getState }, params: { workshopSetId } }) => {
       const workshopSets = () => getState().classes.workshopSets;
-      if (!workshopSets().loaded) {
-        await dispatch(getWorkshopSets());
-      }
+      if (!workshopSets().loaded) await dispatch(getWorkshopSets());
 
       if (!workshopSets().loaded) {
         dispatch(setRouteError());

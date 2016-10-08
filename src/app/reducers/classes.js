@@ -6,6 +6,9 @@ import {
   GET_WORKSHOPS_REQUEST,
   GET_WORKSHOPS_SUCCESS,
   GET_WORKSHOPS_FAILURE,
+  GET_WORKSHOP_REQUEST,
+  GET_WORKSHOP_SUCCESS,
+  GET_WORKSHOP_FAILURE,
 } from 'app/actions/classes';
 
 
@@ -16,6 +19,7 @@ const initialState = {
     items: [],
   },
   workshops: {},
+  workshop: {},
 };
 
 export default function classesReducer(state = initialState, action = {}) {
@@ -87,6 +91,50 @@ export default function classesReducer(state = initialState, action = {}) {
           ...state.workshops,
           [action.workshopSetId]: {
             ...state.workshops[action.workshopSetId],
+            loading: false,
+            error: action.error,
+          },
+        },
+      };
+
+    case GET_WORKSHOP_REQUEST:
+      return {
+        ...state,
+        workshops: {
+          ...state.workshops,
+          [action.workshopId]: {
+            ...state.workshops[action.workshopId],
+            loading: true,
+          },
+        },
+      };
+
+    case GET_WORKSHOP_SUCCESS:
+      return {
+        ...state,
+        workshops: {
+          ...state.workshops,
+          [action.workshopId]: {
+            ...state.workshops[action.workshopId],
+            loading: false,
+            loaded: true,
+            // TODO: Check if this actually returns an array
+            items: action.response.Results.map(camelCaseObject)
+              .map(({ workshopId, ...props }) => ({
+                id: workshopId,
+                ...props,
+              })),
+          },
+        },
+      };
+
+    case GET_WORKSHOP_FAILURE:
+      return {
+        ...state,
+        workshops: {
+          ...state.workshops,
+          [action.workshopId]: {
+            ...state.workshops[action.workshopId],
             loading: false,
             error: action.error,
           },

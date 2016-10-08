@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Redirect, Route, IndexRoute } from 'react-router';
 
 import { clearRouteError } from 'app/actions/routeError';
 import requireLogin from 'app/lib/requireLogin';
@@ -20,11 +20,12 @@ export default function getRoutes(store) {
 
   return (
     <Route path="/" component={App} onChange={onChange}>
+      <Redirect from="/workshops" to="/" />
       <Route path="/__404" component={ErrorView} status={404} />
       <Route path="/__500" component={ErrorView} status={500} />
       <IndexRoute component={CategoriesView} />
       <Route path="/categories/:workshopSetId" component={WorkshopsView} />
-      <Route path="/book" component={BookView} onEnter={requireLogin(store)} />
+      <Route path="/workshops/:workshopId" component={BookView} onEnter={requireLogin(store)} />
       <Route path="/faq" component={FaqView} />
       <Route path="/login" component={LoginView} />
       <Route path="/settings" component={SettingsView} onEnter={requireLogin(store)} />
