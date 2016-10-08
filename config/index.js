@@ -1,5 +1,6 @@
 export default {
   port: process.env.PORT || 8000,
+  publicHost: 'uts-helps-booking.azurewebsites.net',
   helps: {
     baseUrl: 'http://uts-helps.azurewebsites.net/api',
     headers: {
