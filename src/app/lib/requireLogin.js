@@ -2,8 +2,16 @@ import { ensureData } from 'app/actions/sso';
 
 
 export default function requireLogin({ dispatch, getState }) {
-  // Do nothing on the server
-  if (__SERVER__) return (nextState, replace) => {}; // eslint-disable-line no-unused-vars
+  if (__SERVER__) {
+    return (nextState, replace) => {
+      replace({
+        pathname: '/login',
+        query: {
+          redirect: nextState.location.pathname,
+        },
+      });
+    };
+  }
 
   return (nextState, replace, callback) => {
     dispatch(ensureData()).then(() => {

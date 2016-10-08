@@ -15,9 +15,7 @@ import CategoriesList from 'app/components/CategoriesList';
     promise: async ({ store: { dispatch, getState } }) => {
       const loaded = () => getState().classes.workshopSets.loaded;
 
-      if (!loaded()) {
-        await dispatch(getWorkshopSets());
-      }
+      if (!loaded()) await dispatch(getWorkshopSets());
 
       if (!loaded()) dispatch(setRouteError());
     },
