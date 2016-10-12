@@ -12,6 +12,8 @@ import * as appPropTypes from 'app/components/propTypes';
 import DefaultLayout from 'app/layouts/Default';
 import Form from 'app/components/Form';
 
+import styles from './styles.styl';
+
 
 @connect(state => ({
   loaded: state.sso.loaded,
@@ -60,7 +62,9 @@ export default class LoginView extends Component {
             <input type="text" id="username" name="username" autoFocus />
             <label htmlFor="password">Password</label>
             <input type="password" id="password" name="password" />
-            <a href="https://email.itd.uts.edu.au/webapps/myaccount/passwordreset/" target="_blank">Forgot password?</a>
+            <div className={styles.forgot}>
+              <a href="https://email.itd.uts.edu.au/webapps/myaccount/passwordreset/" target="_blank">Forgot password?</a>
+            </div>
             <input type="submit" value="Login" />
           </Form>
         )}
