@@ -20,23 +20,18 @@ export function getSettingsHandler(req, res, next) { // eslint-disable-line no-u
     .then(rejectOnError)
     .then((response) => {
       res.send({
-        mobile: response.AltContact || null,
+        mobile: response.Student.alternative_contact || null,
         ...settings[studentId],
       });
     })
-    .catch((error) => { // eslint-disable-line no-unused-vars
-      res.send({
-        ...settings[studentId],
-      });
-
-      // Temporarily disabled
-      // next(error);
+    .catch((error) => {
+      next(error);
     });
 }
 
 export function postSettingsHandler(req, res, next) {
   const { studentId } = res.locals;
-  const { emailNotifications, smsNotifications } = req.body;
+  const { mobile, emailNotifications, smsNotifications } = req.body;
   fetch(`${config.helps.baseUrl}/student/register`, {
     method: 'POST',
     headers: {
@@ -49,6 +44,7 @@ export function postSettingsHandler(req, res, next) {
       Status: 'Unspecified',
       FirstLanguage: 'Unspecified',
       CountryOrigin: 'Unspecified',
+      AltContact: mobile,
     }),
   })
     .then(checkStatus)

@@ -1,6 +1,7 @@
 import qs from 'querystring';
 
 import config from 'app/config';
+import baseUrl from 'app/lib/endpoints';
 import { checkStatus } from 'app/lib/fetch';
 
 
@@ -14,7 +15,7 @@ export function authentication(req, res, next) { // eslint-disable-line import/p
     return;
   }
 
-  fetch(`http://localhost:${config.port}${config.sso.retrieve}?${qs.stringify({ client, token })}`)
+  fetch(`${baseUrl(config.sso.retrieve)}?${qs.stringify({ client, token })}`)
     .then(checkStatus)
     .then(raw => raw.json())
     .then((response) => {

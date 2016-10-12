@@ -1,8 +1,7 @@
 import config from 'app/config';
 
 
-export default function makeBaseUrl() {
-  const path = '/api/helps';
+export default function makeBaseUrl(path = '/api/helps') {
   if (__SERVER__) {
     let hostname;
     // In the Microsoft Azure environment, PORT is not numeric
