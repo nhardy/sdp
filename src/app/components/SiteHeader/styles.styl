@@ -12,11 +12,14 @@
   position: relative
   display: flex
   flex-direction: row
+  align-items: center
+  propertyPadding('padding-top')
+  propertyPadding('padding-bottom')
   height: 60px
   font-size: 20px
 
 .nav
-  flex: 1
+  flex: 1 1 auto
 
   +upTo($med)
     display: none
@@ -50,20 +53,7 @@
 .hamburger
   cursor: pointer
   z-index: 1
-
-  margin: auto $minGutter auto 0
-
-  +from($sml)
-    margin-right: $smlGutter
-
-  +from($med)
-    margin-right: $medGutter
-
-  +from($lge)
-    margin-right: $lgeGutter
-
-  +from($xlg)
-    margin-right: $xlgGutter
+  propertyGutter('margin-right')
 
 +from($med)
   .aside
@@ -75,6 +65,7 @@
   display: block
 
 .sticky
+  z-index: $zIndexSiteHeader
   background: $highlightColor
   color: $backgroundColor
   transition: background 250ms ease-in-out
