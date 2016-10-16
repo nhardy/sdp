@@ -3,10 +3,11 @@ import { Link } from 'react-router';
 import cx from 'classnames';
 
 import config from 'app/config';
-import moment, { formatDuration } from 'app/lib/moment';
+import moment from 'app/lib/moment';
 import * as appPropTypes from 'app/components/propTypes';
 import Button from 'app/components/Button';
 import FontAwesome from 'app/components/FontAwesome';
+import WorkshopDetails from 'app/components/WorkshopDetails';
 
 import styles from './styles.styl';
 
@@ -25,7 +26,7 @@ export default class Workshop extends Component {
   }
 
   render() {
-    const { id, workShopSetId, topic, startDate, endDate, description, campus, maximum, bookingCount } = this.props;
+    const { id, workShopSetId, topic, startDate, maximum, bookingCount } = this.props;
     const { shown } = this.state;
 
     const availability = Math.max(0, maximum - bookingCount);
@@ -40,32 +41,7 @@ export default class Workshop extends Component {
           </div>
         </Button>
         <div className={cx(styles.info, { [styles.shown]: shown })}>
-          <table className={styles.data}>
-            <colgroup>
-              <col />
-              <col className={styles.values} />
-            </colgroup>
-            <tbody>
-              {description && (
-                <tr>
-                  <td>Description:</td>
-                  <td>{description}</td>
-                </tr>
-              )}
-              <tr>
-                <td>Duration:</td>
-                <td>{formatDuration(startDate, endDate)} (ending {moment.tz(endDate, config.timezone).calendar()})</td>
-              </tr>
-              <tr>
-                <td>Location:</td>
-                <td>{campus}</td>
-              </tr>
-              <tr>
-                <td>Availability:</td>
-                <td>{availability} of {maximum} remaining</td>
-              </tr>
-            </tbody>
-          </table>
+          <WorkshopDetails workshop={this.props} />
           <Link className={styles.book} to={`/book?workshopSetId=${workShopSetId}&workshopId=${id}`}>
             {availability ? 'Book this session' : 'Add to waiting list'}
           </Link>

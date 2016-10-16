@@ -24,14 +24,11 @@ function _getSettings(token) {
 }
 
 export function getSettings() {
-  return (dispatch, getState) => {
-    return dispatch(ensureToken()).then(() => {
-      const { token } = getState().sso;
-      if (token) return dispatch(_getSettings(token));
-
-      // Should also set an error for SSO
-      return Promise.resolve();
-    });
+  return async (dispatch, getState) => {
+    await dispatch(ensureToken());
+    const { token } = getState().sso;
+    if (!token) return;
+    await dispatch(_getSettings(token));
   };
 }
 
@@ -54,13 +51,10 @@ function _saveSettings(token, settings) {
 }
 
 export function saveSettings(settings) {
-  return (dispatch, getState) => {
-    return dispatch(ensureToken()).then(() => {
-      const { token } = getState().sso;
-      if (token) return dispatch(_saveSettings(token, settings));
-
-      // Should also set an error for SSO
-      return Promise.resolve();
-    });
+  return async (dispatch, getState) => {
+    await dispatch(ensureToken());
+    const { token } = getState().sso;
+    if (!token) return;
+    await dispatch(_saveSettings(token, settings));
   };
 }

@@ -4,13 +4,13 @@ import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import { find, get } from 'lodash-es';
 
-import config from 'app/config';
-import moment, { formatDuration } from 'app/lib/moment';
 import { setRouteError } from 'app/actions/routeError';
+import { makeBooking } from 'app/actions/bookings';
 import { getWorkshopSets, getWorkshops } from 'app/actions/classes';
 import * as appPropTypes from 'app/components/propTypes';
 import DefaultLayout from 'app/layouts/Default';
 import Form from 'app/components/Form';
+import WorkshopDetails from 'app/components/WorkshopDetails';
 
 import styles from './styles.styl';
 
@@ -55,53 +55,27 @@ import styles from './styles.styl';
     },
   },
 ])
-@connect((state, { location: { query: { workshopSetId, workshopId } } }) => {
-  return {
-    workshop: find(state.classes.workshops[workshopSetId].items, { id: parseInt(workshopId, 10) }),
-  };
-})
+@connect((state, { location: { query: { workshopSetId, workshopId } } }) => ({
+  workshop: find(state.classes.workshops[workshopSetId].items, { id: parseInt(workshopId, 10) }),
+}), { makeBooking })
 export default class LoginView extends Component {
   static propTypes = {
     workshop: appPropTypes.workshop,
+    makeBooking: appPropTypes.func,
   };
 
-  submit = () => {};
+  submit = () => {
+    this.props.makeBooking(this.props.workshop.id);
+  };
 
   render() {
-    const { workshop: { topic, description, startDate, endDate, campus, maximum, bookingCount } } = this.props;
-    const availability = Math.max(0, maximum - bookingCount);
-
+    const { topic } = this.props.workshop;
     return (
       <DefaultLayout>
         <Helmet title="Book Workshop | UTS: HELPS Booking System" />
         <Form>
           <h1>Book "{topic}" Workshop</h1>
-          <table className={styles.data}>
-            <colgroup>
-              <col />
-              <col className={styles.values} />
-            </colgroup>
-            <tbody>
-              {description && (
-                <tr>
-                  <td>Description:</td>
-                  <td>{description}</td>
-                </tr>
-              )}
-              <tr>
-                <td>Duration:</td>
-                <td>{formatDuration(startDate, endDate)} (ending {moment.tz(endDate, config.timezone).calendar()})</td>
-              </tr>
-              <tr>
-                <td>Location:</td>
-                <td>{campus}</td>
-              </tr>
-              <tr>
-                <td>Availability:</td>
-                <td>{availability} of {maximum} remaining</td>
-              </tr>
-            </tbody>
-          </table>
+          <WorkshopDetails workshop={this.props.workshop} />
           <p className={styles.disclaimer}>
             Please be aware that if you do not attend a session that you have booked,
             the University reserves the right to penalise future attendance. If you

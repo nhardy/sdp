@@ -1,0 +1,18 @@
+@import '~app/assets/stylus'
+
+
+.root
+  width: 100%
+  border-collapse: collapse
+  border-style: hidden
+  propertyGutter('margin-bottom')
+
+  td
+    border: 8px solid transparent
+
+    &:first-child
+      color: $detailColor
+
+.values
+  // For a table `width: 100%` for the column is like setting `flex-grow` >= 1
+  width: 100%
