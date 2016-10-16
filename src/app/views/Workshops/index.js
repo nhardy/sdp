@@ -26,8 +26,8 @@ import styles from './styles.styl';
         return;
       }
 
-      const workshop = find(workshopSets().items, { id: parseInt(workshopSetId, 10) });
-      if (!workshop) {
+      const workshopSet = find(workshopSets().items, { id: parseInt(workshopSetId, 10) });
+      if (!workshopSet) {
         dispatch(setRouteError({ status: 404 }));
         return;
       }

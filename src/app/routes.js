@@ -25,7 +25,7 @@ export default function getRoutes(store) {
       <Route path="/__500" component={ErrorView} status={500} />
       <IndexRoute component={CategoriesView} />
       <Route path="/categories/:workshopSetId" component={WorkshopsView} />
-      <Route path="/workshops/:workshopId" component={BookView} onEnter={requireLogin(store)} />
+      <Route path="/book" component={BookView} onEnter={requireLogin(store)} />
       <Route path="/faq" component={FaqView} />
       <Route path="/login" component={LoginView} />
       <Route path="/settings" component={SettingsView} onEnter={requireLogin(store)} />

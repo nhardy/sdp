@@ -25,7 +25,7 @@ export default class Workshop extends Component {
   }
 
   render() {
-    const { id, topic, startDate, endDate, description, campus, maximum, bookingCount } = this.props;
+    const { id, workShopSetId, topic, startDate, endDate, description, campus, maximum, bookingCount } = this.props;
     const { shown } = this.state;
 
     const availability = Math.max(0, maximum - bookingCount);
@@ -66,7 +66,9 @@ export default class Workshop extends Component {
               </tr>
             </tbody>
           </table>
-          <Link className={styles.book} to={`/workshops/${id}`}>{availability ? 'Book this session' : 'Add to waiting list'}</Link>
+          <Link className={styles.book} to={`/book?workshopSetId=${workShopSetId}&workshopId=${id}`}>
+            {availability ? 'Book this session' : 'Add to waiting list'}
+          </Link>
         </div>
       </li>
     );

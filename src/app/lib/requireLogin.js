@@ -7,7 +7,7 @@ export default function requireLogin({ dispatch, getState }) {
       replace({
         pathname: '/login',
         query: {
-          redirect: nextState.location.pathname,
+          redirect: `${nextState.location.pathname}${nextState.location.search}`,
         },
       });
     };
@@ -19,7 +19,7 @@ export default function requireLogin({ dispatch, getState }) {
         replace({
           pathname: '/login',
           query: {
-            redirect: nextState.location.pathname,
+            redirect: `${nextState.location.pathname}${nextState.location.search}`,
           },
         });
       }
