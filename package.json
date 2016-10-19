@@ -1,7 +1,7 @@
 {
-  "name": "web-scaffold",
+  "name": "sdp",
   "version": "0.0.0",
-  "description": "An example web scaffold",
+  "description": "Systems Development Project",
   "main": "server.js",
   "scripts": {
     "cover": "babel-node ./node_modules/.bin/isparta cover _mocha -- --reporter dot",
