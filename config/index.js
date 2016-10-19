@@ -2,9 +2,9 @@ export default {
   port: process.env.PORT || 8000,
   publicHost: 'uts-helps-booking.azurewebsites.net',
   helps: {
-    baseUrl: 'http://uts-helps.azurewebsites.net/api',
+    baseUrl: 'http://ec2-54-187-229-144.us-west-2.compute.amazonaws.com/api',
     headers: {
-      AppKey: '31281',
+      AppKey: 'thisisoursecret',
       Accept: 'application/json',
     },
   },

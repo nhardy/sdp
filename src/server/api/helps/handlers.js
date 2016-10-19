@@ -24,7 +24,14 @@ export function getSettingsHandler(req, res, next) { // eslint-disable-line no-u
       });
     })
     .catch((error) => {
-      next(error);
+      if (error.response.DisplayMessage === 'Student not found.') {
+        res.send({
+          ...settings[studentId],
+          hasRegistered: false,
+        });
+      } else {
+        next(error);
+      }
     });
 }
 
@@ -152,8 +159,15 @@ export function simpleProxy(prefix) {
 
         const body = JSON.parse(raw);
 
-        if (!body.IsSuccess) {
-          const error = new Error(body.DisplayMessage || 'Unknown Error');
+        if (response.statusCode >= 400) {
+          const error = new Error(body.DisplayMessage || body.MessageDetail || body.Message || 'Unknown Error');
+          error.status = response.statusCode;
+          next(error);
+          return;
+        }
+
+        if ({}.hasOwnProperty.call(body, 'IsSuccess') && !body.IsSuccess) {
+          const error = new Error(body.DisplayMessage || body.MessageDetail || body.Message || 'Unknown Error');
           error.status = 500;
           next(error);
           return;

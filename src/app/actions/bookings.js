@@ -66,7 +66,7 @@ function _addWaitList({ workshopId, token }) {
   return {
     types: [ADD_WAIT_LIST_REQUEST, ADD_WAIT_LIST_SUCCESS, ADD_WAIT_LIST_FAILURE],
     endpoint: {
-      url: `${baseUrl()}/workshop/wait/create`,
+      url: `${baseUrl()}/workshop/wait`,
       method: 'POST',
       query: {
         workshopId,

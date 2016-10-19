@@ -6,6 +6,7 @@ import routeError from './routeError';
 import sso from './sso';
 import settings from './settings';
 import classes from './classes';
+import bookings from './bookings';
 
 
 export default combineReducers({
@@ -16,4 +17,5 @@ export default combineReducers({
   sso,
   settings,
   classes,
+  bookings,
 });

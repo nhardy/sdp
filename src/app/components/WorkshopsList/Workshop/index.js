@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import cx from 'classnames';
 
@@ -14,7 +14,8 @@ import styles from './styles.styl';
 
 export default class Workshop extends Component {
   static propTypes = {
-    ...appPropTypes._workshop,
+    workshop: appPropTypes.workshop,
+    isBooking: PropTypes.bool,
   };
 
   state = {
@@ -26,25 +27,28 @@ export default class Workshop extends Component {
   }
 
   render() {
-    const { id, workShopSetId, topic, startDate, maximum, bookingCount } = this.props;
+    const { id, workShopSetId, topic, startDate, starting, maximum, bookingCount } = this.props.workshop;
+    const { isBooking } = this.props;
     const { shown } = this.state;
 
-    const availability = Math.max(0, maximum - bookingCount);
+    const availability = isBooking ? Math.max(0, maximum - bookingCount) : null;
 
     return (
       <li className={styles.root}>
         <Button className={styles.basic} onClick={this.toggle}>
           <span className={styles.topic}>{topic}</span>
-          <span className={styles.time}>{moment.tz(startDate, config.timezone).calendar()}</span>
+          <span className={styles.time}>{moment.tz(startDate || starting, config.timezone).calendar()}</span>
           <div className={styles.toggle}>
             <FontAwesome className={cx({ 'fa-chevron-up': shown, 'fa-chevron-down': !shown })} size={20} />
           </div>
         </Button>
         <div className={cx(styles.info, { [styles.shown]: shown })}>
-          <WorkshopDetails workshop={this.props} />
-          <Link className={styles.book} to={`/book?workshopSetId=${workShopSetId}&workshopId=${id}`}>
-            {availability ? 'Book this session' : 'Add to waiting list'}
-          </Link>
+          <WorkshopDetails workshop={this.props.workshop} isBooking={isBooking} />
+          {!isBooking && (
+            <Link className={styles.book} to={`/book?workshopSetId=${workShopSetId}&workshopId=${id}`}>
+              {availability ? 'Book this session' : 'Add to waiting list'}
+            </Link>
+            )}
         </div>
       </li>
     );

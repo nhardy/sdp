@@ -5,7 +5,9 @@ import { authentication } from 'server/api/helps/middleware';
 import {
   getSettingsHandler,
   postSettingsHandler,
+  getBookingsHandler,
   createBookingHandler,
+  waitHandler,
   simpleProxy,
 } from 'server/api/helps/handlers';
 
@@ -15,7 +17,9 @@ const helpsService = new Express();
 helpsService.get('/settings', authentication, getSettingsHandler);
 helpsService.post('/settings', authentication, bodyParser.json(), postSettingsHandler);
 
+helpsService.get('/workshop/booking/search', authentication, getBookingsHandler);
 helpsService.post('/workshop/booking/create', authentication, createBookingHandler);
+helpsService.post('/workshop/wait', authentication, waitHandler);
 helpsService.use('/workshop', simpleProxy('/workshop'));
 
 helpsService.use((req, res, next) => {

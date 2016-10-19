@@ -6,6 +6,8 @@ import { routerShape } from 'react-router/lib/PropTypes';
 import Helmet from 'react-helmet';
 import { find, get } from 'lodash-es';
 
+import config from 'app/config';
+import moment from 'app/lib/moment';
 import { setRouteError } from 'app/actions/routeError';
 import { makeBooking, addWaitList } from 'app/actions/bookings';
 import { getWorkshopSets, getWorkshops } from 'app/actions/classes';
@@ -83,7 +85,7 @@ export default class LoginView extends Component {
   };
 
   render() {
-    const { topic } = this.props.workshop;
+    const { topic, startDate } = this.props.workshop;
     const availability = this.getAvailability();
 
     return (
@@ -91,6 +93,7 @@ export default class LoginView extends Component {
         <Helmet title="Book Workshop | UTS: HELPS Booking System" />
         <Form>
           <h1>{availability ? 'Book' : 'Waiting List for'} "{topic}" Workshop</h1>
+          <h2>Starts {moment.tz(startDate, config.timezone).calendar()}</h2>
           <WorkshopDetails workshop={this.props.workshop} />
           <p className={styles.disclaimer}>
             Please be aware that if you do not attend a session that you have booked,
