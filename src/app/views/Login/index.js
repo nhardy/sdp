@@ -8,6 +8,7 @@ import Helmet from 'react-helmet';
 import { get } from 'lodash-es';
 
 import config from 'app/config';
+import { getSettings } from 'app/actions/settings';
 import * as appPropTypes from 'app/components/propTypes';
 import DefaultLayout from 'app/layouts/Default';
 import Form from 'app/components/Form';
@@ -16,15 +17,20 @@ import styles from './styles.styl';
 
 
 @connect(state => ({
-  loaded: state.sso.loaded,
+  ssoLoaded: state.sso.loaded,
+  settingsLoaded: state.settings.loaded,
   user: state.sso.user,
-}))
+  hasRegistered: state.settings.hasRegistered,
+}), { getSettings })
 @withRouter
 export default class LoginView extends Component {
   static propTypes = {
-    loaded: PropTypes.bool,
+    ssoLoaded: PropTypes.bool,
+    settingsLoaded: PropTypes.bool,
     user: appPropTypes.user,
+    hasRegistered: PropTypes.bool,
     router: routerShape,
+    getSettings: PropTypes.func,
   };
 
   static contextTypes = {
@@ -33,10 +39,15 @@ export default class LoginView extends Component {
 
   state = {};
 
+  componentDidMount() {
+    this.props.getSettings();
+  }
+
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.user) return;
-    this.props.router.replace(this.getRedirect());
-    this.setState({ willRedirect: true });
+    if (!nextProps.settingsLoaded) return;
+    const redirect = this.getRedirect();
+    !this._redirecting && this.props.router.replace(nextProps.hasRegistered ? redirect : { pathname: '/settings', query: { redirect } });
+    this._redirecting = true;
   }
 
   getRedirect = () => {
@@ -44,8 +55,7 @@ export default class LoginView extends Component {
   };
 
   render() {
-    const { loaded } = this.props;
-    const { willRedirect } = this.state;
+    const { ssoLoaded, user } = this.props;
     const { location } = this.context;
     const error = get(location, 'query.error');
     const loginParams = {
@@ -57,7 +67,7 @@ export default class LoginView extends Component {
     return (
       <DefaultLayout>
         <Helmet title="Login | UTS: HELPS Booking System" />
-        {loaded && !willRedirect && (
+        {ssoLoaded && !user && (
           <Form method="POST" action={loginUrl}>
             <h1>Login</h1>
             {error && (

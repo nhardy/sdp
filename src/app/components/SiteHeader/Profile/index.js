@@ -36,7 +36,8 @@ export default class Profile extends Component {
     // Delay rendering till after component mounts to prevent server render discard
     if (hidden || !loaded) return null;
 
-    const logoutLink = `/api/sso/logout?client=${config.sso.client}&redirect=${encodeURIComponent(this.context.location.pathname)}`;
+    const currentLink = `${this.context.location.pathname}${this.context.location.search}`;
+    const logoutLink = `/api/sso/logout?client=${config.sso.client}&redirect=${encodeURIComponent(currentLink)}`;
 
     return (
       <div>

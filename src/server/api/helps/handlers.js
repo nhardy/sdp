@@ -52,6 +52,7 @@ export function postSettingsHandler(req, res, next) {
       settings[studentId] = {
         emailNotifications,
         smsNotifications,
+        hasRegistered: true,
       };
       res.status(204).end();
     })

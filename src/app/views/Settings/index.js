@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { routerShape } from 'react-router/lib/PropTypes';
 import Helmet from 'react-helmet';
+import { get } from 'lodash-es';
 import cx from 'classnames';
 
+import * as appPropTypes from 'app/components/propTypes';
 import { getSettings, saveSettings } from 'app/actions/settings';
 import DefaultLayout from 'app/layouts/Default';
 import Form from 'app/components/Form';
@@ -42,6 +44,10 @@ export default class SettingsView extends Component {
     saveSettings: PropTypes.func,
   };
 
+  static contextTypes = {
+    location: appPropTypes.location,
+  };
+
   state = {
     loading: true,
   };
@@ -62,6 +68,10 @@ export default class SettingsView extends Component {
     this._isMounted = false;
   }
 
+  getRedirect = () => {
+    return get(this.context.location, 'query.redirect', '/');
+  };
+
   updateMobile = () => {
     this.setState({ mobile: this._mobile.value });
   };
@@ -81,7 +91,7 @@ export default class SettingsView extends Component {
       mobile = userMobile;
     }
     this.props.saveSettings({ mobile, emailNotifications, smsNotifications }).then(() => {
-      this.props.router.push('/');
+      this.props.router.push(this.getRedirect());
     });
   }
 
