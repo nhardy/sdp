@@ -4,7 +4,6 @@
   "description": "An example web scaffold",
   "main": "server.js",
   "scripts": {
-    "shrink": "make shrinkwrap",
     "cover": "babel-node ./node_modules/.bin/isparta cover _mocha -- --reporter dot",
     "lint": "eslint ./src ./test ./build",
     "lint:fix": "eslint --fix ./src ./test ./build",
@@ -104,7 +103,7 @@
     "uuid": "^2.0.2"
   },
   "engines": {
-    "node": "^6.0.0",
-    "npm": "^3.0.0"
+    "node": "^6.9.0",
+    "npm": "^3.10.8"
   }
 }
