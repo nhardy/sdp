@@ -10,6 +10,7 @@ import BookView from 'app/views/Book';
 import FaqView from 'app/views/Faq';
 import LoginView from 'app/views/Login';
 import SettingsView from 'app/views/Settings';
+import BookingsView from 'app/views/Bookings';
 import ErrorView from 'app/views/Error';
 
 
@@ -29,6 +30,7 @@ export default function getRoutes(store) {
       <Route path="/faq" component={FaqView} />
       <Route path="/login" component={LoginView} />
       <Route path="/settings" component={SettingsView} onEnter={requireLogin(store)} />
+      <Route path="/bookings" component={BookingsView} onEnter={requireLogin(store)} />
       <Route path="*" component={ErrorView} status={404} />
     </Route>
   );

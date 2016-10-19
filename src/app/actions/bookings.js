@@ -1,3 +1,4 @@
+import config from 'app/config';
 import baseUrl from 'app/lib/endpoints';
 import { ensureToken } from 'app/actions/sso';
 
@@ -21,6 +22,7 @@ function _getBookings({ token }) {
       url: `${baseUrl()}/workshop/booking/search`,
       query: {
         active: 'true',
+        client: config.sso.client,
         token,
       },
     },
@@ -44,6 +46,7 @@ function _makeBooking({ workshopId, token }) {
       method: 'POST',
       query: {
         workshopId,
+        client: config.sso.client,
         token,
       },
     },
@@ -67,6 +70,7 @@ function _addWaitList({ workshopId, token }) {
       method: 'POST',
       query: {
         workshopId,
+        client: config.sso.client,
         token,
       },
     },

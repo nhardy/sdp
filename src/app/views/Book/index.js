@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
+import { withRouter } from 'react-router';
+import { routerShape } from 'react-router/lib/PropTypes';
 import Helmet from 'react-helmet';
 import { find, get } from 'lodash-es';
 
 import { setRouteError } from 'app/actions/routeError';
-import { makeBooking } from 'app/actions/bookings';
+import { makeBooking, addWaitList } from 'app/actions/bookings';
 import { getWorkshopSets, getWorkshops } from 'app/actions/classes';
 import * as appPropTypes from 'app/components/propTypes';
 import DefaultLayout from 'app/layouts/Default';
@@ -57,24 +59,38 @@ import styles from './styles.styl';
 ])
 @connect((state, { location: { query: { workshopSetId, workshopId } } }) => ({
   workshop: find(state.classes.workshops[workshopSetId].items, { id: parseInt(workshopId, 10) }),
-}), { makeBooking })
+}), { makeBooking, addWaitList })
+@withRouter
 export default class LoginView extends Component {
   static propTypes = {
     workshop: appPropTypes.workshop,
-    makeBooking: appPropTypes.func,
+    router: routerShape,
+    makeBooking: PropTypes.func,
+    addWaitList: PropTypes.func,
   };
 
-  submit = () => {
-    this.props.makeBooking(this.props.workshop.id);
+  getAvailability = () => {
+    const { maximum, bookingCount } = this.props.workshop;
+    return Math.max(0, maximum - bookingCount);
+  };
+
+  submit = async () => {
+    const { id } = this.props.workshop;
+    await (this.getAvailability()
+      ? this.props.makeBooking(id)
+      : this.props.addWaitList(id));
+    this.props.router.push('/bookings');
   };
 
   render() {
     const { topic } = this.props.workshop;
+    const availability = this.getAvailability();
+
     return (
       <DefaultLayout>
         <Helmet title="Book Workshop | UTS: HELPS Booking System" />
         <Form>
-          <h1>Book "{topic}" Workshop</h1>
+          <h1>{availability ? 'Book' : 'Waiting List for'} "{topic}" Workshop</h1>
           <WorkshopDetails workshop={this.props.workshop} />
           <p className={styles.disclaimer}>
             Please be aware that if you do not attend a session that you have booked,
