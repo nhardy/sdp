@@ -5,12 +5,16 @@
 // You do not belong in the Information Technology Industry.
 import querystring from 'querystring';
 
-import { pick } from 'lodash-es';
+import { pick, template } from 'lodash-es';
 import { v4 as uuid } from 'uuid';
 
 import { COOKIE_KEY } from 'server/api/sso/constants';
 import { users, clients, sessions } from 'server/api/sso/db';
 
+import failureHtml from './failure.html';
+
+
+const failureTemplate = template(failureHtml);
 
 function newSession(client, username) {
   const token = uuid();
@@ -28,12 +32,16 @@ export function loginHandler(req, res) {
   // Extremely unsecure. NEVER do this in production.
   // @see https://youtu.be/8ZtInClXe1Q
   if (!user || password !== user.password) {
-    const error = new Error('Login failed');
-    error.status = 403;
-
-    // Rather than producing a JSON response, we would display a login page from the login service
-    // Just throwing the error here, because it isn't important for this assignment
-    throw error;
+    res.status(403);
+    const query = {
+      redirect: req.query.redirect,
+      error: 'Invalid username or password',
+    };
+    const params = {
+      redirect: `/login?${querystring.stringify(query)}`,
+    };
+    const url = `${callback}?${querystring.stringify(params)}`;
+    res.send(failureTemplate({ url }));
   }
 
   // The User has authenticated with the SSO service, set a cookie on the login service

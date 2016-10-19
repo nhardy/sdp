@@ -8,7 +8,7 @@ export default class SSO {
     this._client = client;
   }
 
-  _setCookie({ token, ttl }) {
+  _setCookie({ token = null, ttl = 0 }) {
     const value = JSON.stringify(token);
     cookies.setItem(this._cookieKey, value, ttl, '/');
   }

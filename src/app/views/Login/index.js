@@ -46,6 +46,8 @@ export default class LoginView extends Component {
   render() {
     const { loaded } = this.props;
     const { willRedirect } = this.state;
+    const { location } = this.context;
+    const error = get(location, 'query.error');
     const loginParams = {
       client: config.sso.client,
       redirect: this.getRedirect(),
@@ -58,6 +60,11 @@ export default class LoginView extends Component {
         {loaded && !willRedirect && (
           <Form method="POST" action={loginUrl}>
             <h1>Login</h1>
+            {error && (
+              <div className={styles.error}>
+                <span>{error}</span>
+              </div>
+            )}
             <label htmlFor="username">Staff or student number</label>
             <input type="text" id="username" name="username" autoFocus />
             <label htmlFor="password">Password</label>
