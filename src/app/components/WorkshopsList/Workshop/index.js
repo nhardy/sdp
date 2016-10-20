@@ -40,6 +40,7 @@ export default class Workshop extends Component {
     const { shown } = this.state;
 
     const availability = !isBooking ? Math.max(0, maximum - bookingCount) : null;
+    const hasElapsed = moment().diff(moment.tz(startDate || starting, config.timezone)) > 0;
 
     return (
       <li className={styles.root}>
@@ -52,14 +53,14 @@ export default class Workshop extends Component {
         </Button>
         <div className={cx(styles.info, { [styles.shown]: shown })}>
           <WorkshopDetails workshop={this.props.workshop} isBooking={isBooking} />
-          {!isBooking && (
+          {!isBooking && !hasElapsed && (
             <Link className={styles.book} to={`/book?workshopSetId=${workShopSetId}&workshopId=${id}`}>
               {availability ? 'Book this session' : 'Add to waiting list'}
             </Link>
           )}
-          {isBooking && (
+          {isBooking && !hasElapsed && (
             <Button className={styles.book} onClick={this.cancel}>
-              Cancel
+              Cancel Booking
             </Button>
           )}
         </div>

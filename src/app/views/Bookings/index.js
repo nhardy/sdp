@@ -10,6 +10,8 @@ import * as appPropTypes from 'app/components/propTypes';
 import DefaultLayout from 'app/layouts/Default';
 import WorkshopsList from 'app/components/WorkshopsList';
 
+import styles from './styles.styl';
+
 
 @asyncConnect([
   {
@@ -43,6 +45,7 @@ export default class BookingsView extends Component { // eslint-disable-line rea
     return (
       <DefaultLayout>
         <Helmet title="My Bookings | UTS: HELPS Booking System" />
+        <h1 className={styles.heading}>My Bookings</h1>
         <WorkshopsList items={items} isBooking />
       </DefaultLayout>
     );
