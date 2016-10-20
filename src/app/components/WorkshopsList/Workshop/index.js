@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import cx from 'classnames';
 
 import config from 'app/config';
 import moment from 'app/lib/moment';
+import { cancelBooking } from 'app/actions/bookings';
 import * as appPropTypes from 'app/components/propTypes';
 import Button from 'app/components/Button';
 import FontAwesome from 'app/components/FontAwesome';
@@ -12,10 +14,12 @@ import WorkshopDetails from 'app/components/WorkshopDetails';
 import styles from './styles.styl';
 
 
+@connect(null, { cancelBooking })
 export default class Workshop extends Component {
   static propTypes = {
     workshop: appPropTypes.workshop,
     isBooking: PropTypes.bool,
+    cancelBooking: PropTypes.func,
   };
 
   state = {
@@ -24,14 +28,18 @@ export default class Workshop extends Component {
 
   toggle = () => {
     this.setState({ shown: !this.state.shown });
-  }
+  };
+
+  cancel = () => {
+    this.props.cancelBooking(this.props.workshop.id);
+  };
 
   render() {
     const { id, workShopSetId, topic, startDate, starting, maximum, bookingCount } = this.props.workshop;
     const { isBooking } = this.props;
     const { shown } = this.state;
 
-    const availability = isBooking ? Math.max(0, maximum - bookingCount) : null;
+    const availability = !isBooking ? Math.max(0, maximum - bookingCount) : null;
 
     return (
       <li className={styles.root}>
@@ -48,7 +56,12 @@ export default class Workshop extends Component {
             <Link className={styles.book} to={`/book?workshopSetId=${workShopSetId}&workshopId=${id}`}>
               {availability ? 'Book this session' : 'Add to waiting list'}
             </Link>
-            )}
+          )}
+          {isBooking && (
+            <Button className={styles.book} onClick={this.cancel}>
+              Cancel
+            </Button>
+          )}
         </div>
       </li>
     );

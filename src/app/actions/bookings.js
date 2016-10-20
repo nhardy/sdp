@@ -15,6 +15,10 @@ export const ADD_WAIT_LIST_REQUEST = 'ADD_WAIT_LIST_REQUEST';
 export const ADD_WAIT_LIST_SUCCESS = 'ADD_WAIT_LIST_SUCCESS';
 export const ADD_WAIT_LIST_FAILURE = 'ADD_WAIT_LIST_FAILURE';
 
+export const CANCEL_BOOKING_REQUEST = 'CANCEL_BOOKING_REQUEST';
+export const CANCEL_BOOKING_SUCCESS = 'CANCEL_BOOKING_SUCCESS';
+export const CANCEL_BOOKING_FAILURE = 'CANCEL_BOOKING_FAILURE';
+
 function _getBookings({ token }) {
   return {
     types: [GET_BOOKINGS_REQUEST, GET_BOOKINGS_SUCCESS, GET_BOOKINGS_FAILURE],
@@ -83,5 +87,30 @@ export function addWaitList(workshopId) {
     const { token } = getState().sso;
     if (!token) return;
     await dispatch(_addWaitList({ workshopId, token }));
+  };
+}
+
+function _cancelBooking({ workshopId, token }) {
+  return {
+    types: [CANCEL_BOOKING_REQUEST, CANCEL_BOOKING_SUCCESS, CANCEL_BOOKING_FAILURE],
+    endpoint: {
+      url: `${baseUrl()}/workshop/booking/cancel`,
+      method: 'POST',
+      query: {
+        workshopId,
+        client: config.sso.client,
+        token,
+      },
+    },
+  };
+}
+
+export function cancelBooking(workshopId) {
+  return async (dispatch, getState) => {
+    await dispatch(ensureToken());
+    const { token } = getState().sso;
+    if (!token) return;
+    await dispatch(_cancelBooking({ workshopId, token }));
+    await dispatch(getBookings());
   };
 }

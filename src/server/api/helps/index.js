@@ -8,6 +8,7 @@ import {
   getBookingsHandler,
   createBookingHandler,
   waitHandler,
+  cancelBookingHandler,
   simpleProxy,
 } from 'server/api/helps/handlers';
 
@@ -20,6 +21,7 @@ helpsService.post('/settings', authentication, bodyParser.json(), postSettingsHa
 helpsService.get('/workshop/booking/search', authentication, getBookingsHandler);
 helpsService.post('/workshop/booking/create', authentication, createBookingHandler);
 helpsService.post('/workshop/wait', authentication, waitHandler);
+helpsService.post('/workshop/booking/cancel', authentication, cancelBookingHandler);
 helpsService.use('/workshop', simpleProxy('/workshop'));
 helpsService.use('/misc', simpleProxy('/misc'));
 

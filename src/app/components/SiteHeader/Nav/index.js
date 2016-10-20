@@ -33,6 +33,7 @@ SiteHeaderNav.contextTypes = {
 
 SiteHeaderNav.defaultProps = {
   items: [
+    { to: '/', children: 'Home' },
     { to: 'http://www.ssu.uts.edu.au/helps/about.html', target: '_blank', children: 'HELPS HQ' },
     { to: 'https://servicedesk.uts.edu.au/CAisd/pdmweb.exe', target: '_blank', children: 'IT Service Desk' },
     { to: '/faq', children: 'FAQ' },

@@ -140,6 +140,31 @@ export function waitHandler(req, res, next) {
     });
 }
 
+export function cancelBookingHandler(req, res, next) {
+  const { studentId } = res.locals;
+  const { workshopId } = req.query;
+  const query = {
+    workshopId,
+    studentId,
+    userId: 1, // There is no documentation for this field, but it is required ¯\_(ツ)_/¯
+  };
+
+  fetch(`${config.helps.baseUrl}/workshop/booking/cancel?${qs.stringify(query)}`, {
+    method: 'POST',
+    headers: {
+      ...config.helps.headers,
+    },
+  }).then(checkStatus)
+    .then(raw => raw.json())
+    .then(rejectOnError)
+    .then(() => {
+      res.status(204).end();
+    })
+    .catch((error) => {
+      next(error);
+    });
+}
+
 // NOTE: DO NOT do this in production
 export function simpleProxy(prefix) {
   return (req, res, next) => {

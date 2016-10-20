@@ -29,12 +29,13 @@ import WorkshopsList from 'app/components/WorkshopsList';
 @connect(state => ({
   items: state.bookings.items.map(booking => ({
     ...booking,
+    id: booking.workshopId,
     campus: state.campus.names[booking.campusId],
   })),
 }))
 export default class BookingsView extends Component { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
-    items: appPropTypes.bookings,
+    items: appPropTypes.workshops,
   };
 
   render() {
