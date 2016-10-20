@@ -65,6 +65,7 @@ export default class SiteHeader extends Component {
             <FontAwesome className="fa-close" />
           </label>
           <Nav mode="vertical" />
+          <hr />
           <Profile />
         </aside>
       </header>

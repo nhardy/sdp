@@ -5,6 +5,8 @@ import { Link } from 'react-router';
 import config from 'app/config';
 import * as appPropTypes from 'app/components/propTypes';
 
+import styles from './styles.styl';
+
 
 @connect(state => ({
   loaded: state.sso.loaded,
@@ -41,7 +43,7 @@ export default class Profile extends Component {
 
     return (
       <div>
-        <ul>
+        <ul className={styles.list}>
           {!user && <li><a href="/login">Login</a></li>}
           {user && <li>Hi, {user.firstName}</li>}
           {user && <li><Link to="/bookings">My Bookings</Link></li>}

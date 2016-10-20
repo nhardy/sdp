@@ -1,0 +1,18 @@
+@import '~app/assets/stylus'
+
+
+.list
+  +upTo($med)
+    li:not(:last-child)
+      margin-bottom: 8px
+
+  +from($med)
+    display: flex
+    flex-direction: row
+    justify-content: flex-end
+
+    li:first-child
+      flex: 1 0 auto
+
+    li:not(:last-child)
+      margin-right: 8px
