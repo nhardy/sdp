@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 
 import { setRouteError } from 'app/actions/routeError';
 import { getBookings } from 'app/actions/bookings';
+import { getCampus } from 'app/actions/campus';
 import * as appPropTypes from 'app/components/propTypes';
 import DefaultLayout from 'app/layouts/Default';
 import WorkshopsList from 'app/components/WorkshopsList';
@@ -13,9 +14,12 @@ import WorkshopsList from 'app/components/WorkshopsList';
 @asyncConnect([
   {
     promise: async ({ store: { dispatch, getState } }) => {
-      await dispatch(getBookings());
-      const bookings = () => getState().bookings;
-      if (!bookings.loaded) {
+      await Promise.all([
+        dispatch(getBookings()),
+        dispatch(getCampus()),
+      ]);
+
+      if (!getState().bookings.loaded || !getState().campus.loaded) {
         setRouteError({ status: 500 });
         return;
       }
@@ -23,7 +27,10 @@ import WorkshopsList from 'app/components/WorkshopsList';
   },
 ])
 @connect(state => ({
-  items: state.bookings.items,
+  items: state.bookings.items.map(booking => ({
+    ...booking,
+    campus: state.campus.names[booking.campusId],
+  })),
 }))
 export default class BookingsView extends Component { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {

@@ -7,6 +7,7 @@ import sso from './sso';
 import settings from './settings';
 import classes from './classes';
 import bookings from './bookings';
+import campus from './campus';
 
 
 export default combineReducers({
@@ -18,4 +19,5 @@ export default combineReducers({
   settings,
   classes,
   bookings,
+  campus,
 });

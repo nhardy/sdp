@@ -21,6 +21,7 @@ helpsService.get('/workshop/booking/search', authentication, getBookingsHandler)
 helpsService.post('/workshop/booking/create', authentication, createBookingHandler);
 helpsService.post('/workshop/wait', authentication, waitHandler);
 helpsService.use('/workshop', simpleProxy('/workshop'));
+helpsService.use('/misc', simpleProxy('/misc'));
 
 helpsService.use((req, res, next) => {
   const error = new Error(`Resource for '${req.url}' not found`);

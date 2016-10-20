@@ -6,6 +6,18 @@
   min-height: 100vh
   flex-direction: column
 
+.profileContainer
+  +upTo($med)
+    display: none
+
+  background: $themeColor
+  color: $backgroundColor
+  propertyPadding('padding-top')
+  propertyPadding('padding-bottom')
+
+.profileWrapper
+  composes: column from 'app/assets/stylus/common.styl'
+
 .main
   composes: column from 'app/assets/stylus/common.styl'
   background: $backgroundColor

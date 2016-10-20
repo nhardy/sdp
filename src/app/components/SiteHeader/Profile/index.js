@@ -44,6 +44,7 @@ export default class Profile extends Component {
         <ul>
           {!user && <li><a href="/login">Login</a></li>}
           {user && <li>Hi, {user.firstName}</li>}
+          {user && <li><Link to="/bookings">My Bookings</Link></li>}
           {user && <li><Link to="/settings">Settings</Link></li>}
           {user && <li><a href={logoutLink}>Logout</a></li>}
         </ul>
