@@ -3,7 +3,7 @@ import config from 'app/config';
 
 export const users = {
   1234567: {
-    studentId: 1234567,
+    studentId: 12345678,
     firstName: 'Nathan',
     lastName: 'Hardy',
     // NEVER EVER store passwords in plaintext
